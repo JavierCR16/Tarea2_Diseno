@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="193.0" prefWidth="606.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interfaz.ControllerDetallesTicket">
+   <children>
+      <Label layoutX="15.0" layoutY="25.0" text="Nombre Cliente" />
+      <Label layoutX="15.0" layoutY="55.0" text="Fecha" />
+      <Label layoutX="15.0" layoutY="80.0" text="Categoría" />
+      <Label layoutX="15.0" layoutY="105.0" text="Estado" />
+      <Label layoutX="15.0" layoutY="130.0" text="Asunto" />
+      <Label fx:id="nombreCliente" layoutX="160.0" layoutY="25.0" prefHeight="21.0" prefWidth="421.0" text="Label" />
+      <Button fx:id="save" layoutX="507.0" layoutY="151.0" mnemonicParsing="false" text="Guardar" />
+      <Label fx:id="fecha" layoutX="160.0" layoutY="55.0" prefHeight="21.0" prefWidth="421.0" text="Label" />
+      <Label fx:id="estado" layoutX="160.0" layoutY="105.0" prefHeight="21.0" prefWidth="421.0" text="Label" />
+      <Label fx:id="asunto" layoutX="160.0" layoutY="130.0" prefHeight="21.0" prefWidth="421.0" text="Label" />
+      <Label layoutX="160.0" layoutY="80.0">
+         <contextMenu>
+            <ContextMenu fx:id="categoria">
+              <items>
+                  <MenuItem mnemonicParsing="false" text="SIN_CATALOGAR" />
+                <MenuItem mnemonicParsing="false" text="ROJO" />
+                  <MenuItem mnemonicParsing="false" text="AMARILLO" />
+                  <MenuItem mnemonicParsing="false" text="VERDE" />
+              </items>
+            </ContextMenu>
+         </contextMenu>
+      </Label>
+   </children>
+</AnchorPane>
