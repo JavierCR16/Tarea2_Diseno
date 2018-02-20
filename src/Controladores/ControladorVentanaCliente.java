@@ -5,10 +5,12 @@ import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ControladorVentanaLogin implements Initializable{
+/**
+ * Created by Javier on 2/20/2018.
+ */
+public class ControladorVentanaCliente implements Initializable {
 
     public void initialize(URL fxmlLocations, ResourceBundle resources){
-
 
 
 
