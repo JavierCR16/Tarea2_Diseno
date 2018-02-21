@@ -62,7 +62,7 @@ public class GestorBD {
 
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            String connectionUrl = "jdbc:sqlserver://localhost:1433;" + "databaseName=PrograBasesTransacciones;user=" + username
+            String connectionUrl = "jdbc:sqlserver://localhost:1433;" + "databaseName=BaseTarea2Diseno;user=" + username
                     + ";password=" + password;
             conexion = DriverManager.getConnection(connectionUrl);
             estado = conexion.createStatement();
@@ -78,7 +78,7 @@ public class GestorBD {
         Statement statement = null;
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            String connectionUrl = "jdbc:sqlserver://localhost:1433;" + "databaseName=PrograBasesTransacciones;user=" + username
+            String connectionUrl = "jdbc:sqlserver://localhost:1433;" + "databaseName=BaseTarea2Diseno;user=" + username
                     + ";password=" + password;
             connection = DriverManager.getConnection(connectionUrl);
             connection.createStatement();
@@ -144,6 +144,7 @@ public class GestorBD {
                     PreparedStatement insertarCliente = conexion.prepareStatement(sqlCliente, Statement.RETURN_GENERATED_KEYS);
                     insertarCliente.setString(1, nombre);
                     insertarCliente.executeUpdate();
+
                     ResultSet buscarUltimoID = insertarCliente.getGeneratedKeys();
                     int ultimoId = 0;
                     if (buscarUltimoID.next()) {
@@ -152,15 +153,17 @@ public class GestorBD {
                     //Aqui se invoca el stored procedure para generar un login al cliente.
                     generarLogIN(nombre, String.valueOf(ultimoId));
                 } catch (SQLException e) {
+                    e.printStackTrace();
                     invocarAlerta(nombre + " ya existe en la base de datos");
                 }
+                break;
 
             case "Empleado":
 
-                String sqlEmpleado = "INSERT INTO EMPLEADO (IDSUPERVISOR, NOMBRE,ESPRCIALIZACION) VALUES (?, ?, ?)";
+                String sqlEmpleado = "INSERT INTO EMPLEADO (IDSUPERVISOR, NOMBRE,ESPECIALIZACION) VALUES (?, ?, ?)";
                 try {
                     PreparedStatement insertarEmpleado = conexion.prepareStatement(sqlEmpleado, Statement.RETURN_GENERATED_KEYS);
-                    insertarEmpleado.setInt(1,idSupervisor); //TODO PONER ID SUPERVISOR
+                    insertarEmpleado.setInt(1, idSupervisor); //TODO PONER ID SUPERVISOR
                     insertarEmpleado.setString(2, nombre);
                     insertarEmpleado.setString(3, GradoImportancia.SIN_CATALOGAR.toString());
                     insertarEmpleado.executeUpdate();
@@ -173,8 +176,10 @@ public class GestorBD {
                     //Aqui se invoca el stored procedure para generar un login al cliente.
                     generarLogIN(nombre, String.valueOf(ultimoId));
                 } catch (SQLException e) {
+                    e.printStackTrace();
                     invocarAlerta(nombre + " ya existe en la base de datos");
                 }
+                break;
         }
     }
 

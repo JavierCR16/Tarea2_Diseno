@@ -28,8 +28,10 @@ public class ControllerAgregar implements Initializable {
             switch (caso){
                 case "Cliente":
                     supervisorActual.agregarCliente(nombre); //Aqui el ID del supervisor no va a ser necesario, pero como la funcion esta dividida por un case, entonces igual hay que enviarlo.
+                    break;
                 case "Empleado":
                     supervisorActual.agregarEmpleado(nombre);
+                    break;
 
             }
 

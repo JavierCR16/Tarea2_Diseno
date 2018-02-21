@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 
 
-<AnchorPane prefHeight="146.0" prefWidth="273.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interfaz.Agregar">
+<AnchorPane prefHeight="146.0" prefWidth="273.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.ControllerAgregar">
    <children>
       <TextField fx:id="nombreField" layoutX="87.0" layoutY="29.0" />
       <Label layoutX="24.0" layoutY="33.0" text="Nombre" />
