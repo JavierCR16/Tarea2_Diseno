@@ -160,12 +160,11 @@ public class GestorBD {
 
             case "Empleado":
 
-                String sqlEmpleado = "INSERT INTO EMPLEADO (IDSUPERVISOR, NOMBRE,ESPECIALIZACION) VALUES (?, ?, ?)";
+                String sqlEmpleado = "INSERT INTO EMPLEADO (IDSUPERVISOR, NOMBRE) VALUES (?, ?, ?)";
                 try {
                     PreparedStatement insertarEmpleado = conexion.prepareStatement(sqlEmpleado, Statement.RETURN_GENERATED_KEYS);
                     insertarEmpleado.setInt(1, idSupervisor); //TODO PONER ID SUPERVISOR
                     insertarEmpleado.setString(2, nombre);
-                    insertarEmpleado.setString(3, GradoImportancia.SIN_CATALOGAR.toString());
                     insertarEmpleado.executeUpdate();
 
                     ResultSet buscarUltimoID = insertarEmpleado.getGeneratedKeys();
@@ -181,6 +180,29 @@ public class GestorBD {
                 }
                 break;
         }
+    }
+
+    public int encontrarIDEspecializacion(String especializacion){
+
+        int idEncontrado = 0;
+        String sqlEspecializacion = "SELECT ID FROM GRADOIMPORTANCIA WHERE CATEGORIA = ?";
+
+        try{
+
+            PreparedStatement encontrarEspecializacion = conexion.prepareStatement(sqlEspecializacion);
+            encontrarEspecializacion.setString(1,especializacion);
+            ResultSet especializacionEncontrado = encontrarEspecializacion.executeQuery();
+
+            while(especializacionEncontrado.next()){
+                idEncontrado = Integer.valueOf(especializacionEncontrado.getString("ID"));
+            }
+
+        }catch(SQLException e){
+            e.printStackTrace();
+
+        }
+        return idEncontrado;
+
     }
 
     public void generarLogIN(String nombre, String contrasena) {
