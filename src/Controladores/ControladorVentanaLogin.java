@@ -73,9 +73,7 @@ public class ControladorVentanaLogin implements Initializable {
         ingresarCliente.setOnAction(event -> {
             String nombreCli = nombreCliente.getText();
             int idCli = Integer.valueOf(idCliente.getText());
-
             loguearEntidad(nombreCli,idCli,"Cliente",1200,600);
-
         });
 
 

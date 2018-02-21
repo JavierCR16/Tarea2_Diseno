@@ -1,8 +1,11 @@
 package Modelo;
 
+import Gestores.GestorBD;
+
 public class Cliente {
     public int ID;
     public String nombre;
+    public GestorBD gestorBD;
 
     public Cliente(String nombre, int id){
         this.nombre = nombre;
@@ -10,6 +13,6 @@ public class Cliente {
     }
 
     public void agregarTicket(String asunto){
-        new Ticket(asunto, this);
+        gestorBD.agregarTicket(asunto, this.ID);
     }
 }
