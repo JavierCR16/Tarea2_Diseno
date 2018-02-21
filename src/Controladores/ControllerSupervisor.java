@@ -2,6 +2,7 @@ package Controladores;
 
 import Controladores.ControllerDetallesTicket;
 import Gestores.GestorBD;
+import Modelo.Supervisor;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -46,6 +47,8 @@ public class ControllerSupervisor implements Initializable {
 
     GestorBD gestorBDSupervisor;
 
+    Supervisor supervisorLogueado;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //TODO Cargar datos de la base en los listView de clientes, empleados y tickets
@@ -66,8 +69,11 @@ public class ControllerSupervisor implements Initializable {
             FXMLLoader loader = new FXMLLoader();
             Parent root = loader.load(getClass().getResource("../Interfaz/Agregar.fxml").openStream());
             ControllerAgregar controllerAgregar = loader.getController();
-            controllerAgregar.gestorBD = this.gestorBDSupervisor;
+
             controllerAgregar.caso = option;
+            controllerAgregar.supervisorActual = supervisorLogueado; //Se manda a la otra ventana para poder enviar el id al gestorBD para que el empleado pueda tener una referencia de su supervisor en la base de datos.
+            controllerAgregar.supervisorActual.setGestorSupervisor(gestorBDSupervisor);
+
             Stage escenario = new Stage();
             escenario.setTitle("Agregar "+ option);
             escenario.setScene(new Scene(root, 273, 146));

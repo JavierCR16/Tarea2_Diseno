@@ -1,6 +1,7 @@
 package Controladores;
 
 import Gestores.GestorBD;
+import Modelo.Empleado;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
@@ -12,6 +13,8 @@ import java.util.ResourceBundle;
 public class ControladorVentanaEmpleado implements Initializable {
 
     GestorBD gestorBDEmpleado;
+
+    Empleado empleadoLogueado;
 
     public void initialize(URL fxmlLocations, ResourceBundle resources){
 

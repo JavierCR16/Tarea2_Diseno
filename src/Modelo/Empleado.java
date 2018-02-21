@@ -6,9 +6,9 @@ public class Empleado {
     public GradoImportancia especializacion;
     public Ticket atendiendo;
 
-    public Empleado(String nombre){
+    public Empleado(String nombre, int id){
         this.nombre = nombre;
-        this.ID = 0; //TODO Sacar el ID  de la base e insertar al nuevo empleado
+        this.ID = id; //TODO Sacar el ID  de la base e insertar al nuevo empleado
     }
 
     public void solicitarTicket(){

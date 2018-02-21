@@ -1,6 +1,8 @@
 package Controladores;
 
 import Gestores.GestorBD;
+import Modelo.Cliente;
+import Modelo.Empleado;
 import Modelo.Supervisor;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -85,7 +87,8 @@ public class ControladorVentanaLogin implements Initializable {
         if (gestorBase.existeConexionUsuarios(nombre, String.valueOf(id)) && gestorBase.existeEntidad(nombre, id,nombreTabla.toUpperCase())) {
 
             gestorBase.establecerConexionUsuario(nombre,String.valueOf(id));
-            abrirVentanaEntidad(nombreTabla,width,height);
+
+            abrirVentanaEntidad(nombreTabla,width,height, nombre, id);
         }
         else{
             gestorBase.invocarAlerta("No existe un usuario asociado a: "+nombre);
@@ -94,13 +97,13 @@ public class ControladorVentanaLogin implements Initializable {
 
     }
 
-    public void abrirVentanaEntidad(String entidad , int width, int height) {
+    public void abrirVentanaEntidad(String entidad , int width, int height, String nombre, int id) {
 
         try {
             FXMLLoader loader = new FXMLLoader();
             Parent root = loader.load(getClass().getResource("../Interfaz/"+entidad+".fxml").openStream());
 
-            buscarControladorYSetGestor(entidad, loader); //Busca el controlador dependiendo de la entidad para setearle el gestor de base correspondiente
+            buscarControladorYSetGestor(entidad, loader, nombre, id); //Busca el controlador dependiendo de la entidad para setearle el gestor de base correspondiente
             Stage escenario = new Stage();
             escenario.setTitle(entidad);
             escenario.setScene(new Scene(root, width, height)); //TODO Cambiarlo(Cambiar los valores de width y height) en cada funcion dependiendo de la ventana.
@@ -112,22 +115,24 @@ public class ControladorVentanaLogin implements Initializable {
 
     }
 
-    public void buscarControladorYSetGestor(String entidad, FXMLLoader loader, String nombre, int ID){
+    public void buscarControladorYSetGestor(String entidad, FXMLLoader loader,String nombre, int id){
 
         switch(entidad){
 
             case "Supervisor":
                 ControllerSupervisor controladorSupervisor = loader.getController();
                 controladorSupervisor.gestorBDSupervisor = gestorBase;
-                controladorSupervisor.supervisor = new Supervisor(nombre, ID);
+                controladorSupervisor.supervisorLogueado = new Supervisor(nombre,id);
                 break;
             case "Empleado":
                 ControladorVentanaEmpleado controladorEmpleado = loader.getController();
                 controladorEmpleado.gestorBDEmpleado = gestorBase;
+                controladorEmpleado.empleadoLogueado = new Empleado(nombre,id);
                 break;
             case "Cliente":
                 ControladorVentanaCliente controladorCliente = loader.getController();
                 controladorCliente.gestorBDCliente = gestorBase;
+                controladorCliente.clienteLogueado = new Cliente(nombre,id);
         }
 
     }
