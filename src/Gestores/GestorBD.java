@@ -96,22 +96,36 @@ public class GestorBD {
 
     }
 
-    public boolean existeSupervisor(String nombre, int id) {
+    public boolean existeEntidad(String nombre, int id, String tablaBuscar) {
+        establecerConexionSuperUsuario(); // Para cuando se valida un supervisor
+        String sqlEntidad = "";
+        switch (tablaBuscar) {
+
+            case "EMPLEADO":
+                sqlEntidad = "SELECT * FROM " + tablaBuscar + " WHERE CODIGOTRABAJADOR = ? AND NOMBRE = ?";
+                break;
+            default:
+                sqlEntidad = "SELECT * FROM " + tablaBuscar + " WHERE ID = ? AND NOMBRE = ?";
+                break;
+        }
 
         try {
-            String sqlSupervisor = "SELECT * FROM SUPERVISOR WHERE ID = ? AND NOMBRE = ?";
-            PreparedStatement obtenerSupervisor = conexion.prepareStatement(sqlSupervisor);
-            obtenerSupervisor.setInt(1, id);
-            obtenerSupervisor.setString(2, nombre);
-            ResultSet resultados = obtenerSupervisor.executeQuery();
 
-            if (resultados.next())
+            PreparedStatement obtenerEntidad = conexion.prepareStatement(sqlEntidad);
+            obtenerEntidad.setInt(1, id);
+            obtenerEntidad.setString(2, nombre);
+            ResultSet resultados = obtenerEntidad.executeQuery();
+
+            if (resultados.next()) {
+                cerrarConexion();
                 return true;
+            }
 
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        cerrarConexion();
         return false;
     }
 

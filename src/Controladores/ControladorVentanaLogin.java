@@ -51,31 +51,40 @@ public class ControladorVentanaLogin implements Initializable {
         ingresarSupervisor.setOnAction(event -> {
 
             String nombreSuper = nombreSupervisor.getText();
-            int id = Integer.valueOf(idSupervisor.getText());
+            int idSuper = Integer.valueOf(idSupervisor.getText());
 
-            loguearSupervisor(nombreSuper,id);
+            loguearEntidad(nombreSuper,idSuper,"Supervisor",1200,600);
 
         });
 
         ingresarEmpleado.setOnAction(event -> {
+            String nombreEmp = nombreEmpleado.getText();
+            int idEmp = Integer.valueOf(idEmpleado.getText());
 
+            loguearEntidad(nombreEmp,idEmp,"Empleado",1200,600);
 
         });
 
-        ingresarCliente.setOnAction(event -> {
 
+
+        ingresarCliente.setOnAction(event -> {
+            String nombreCli = nombreCliente.getText();
+            int idCli = Integer.valueOf(idCliente.getText());
+
+            loguearEntidad(nombreCli,idCli,"Cliente",1200,600);
 
         });
 
 
     }
 
-    public void loguearSupervisor(String nombre, int id) {
+    public void loguearEntidad(String nombre, int id , String nombreTabla, int width, int height) {
 
 
-        if (gestorBase.existeConexionUsuarios(nombre, String.valueOf(id)) && gestorBase.existeSupervisor(nombre, id)) {
-            gestorBase.existeConexionUsuarios(nombre,String.valueOf(id));
-            abrirVentanaSupervisor();
+        if (gestorBase.existeConexionUsuarios(nombre, String.valueOf(id)) && gestorBase.existeEntidad(nombre, id,nombreTabla.toUpperCase())) {
+
+            gestorBase.establecerConexionUsuario(nombre,String.valueOf(id));
+            abrirVentanaEntidad(nombreTabla,width,height);
         }
         else{
             gestorBase.invocarAlerta("No existe un usuario asociado a: "+nombre);
@@ -84,20 +93,39 @@ public class ControladorVentanaLogin implements Initializable {
 
     }
 
-    public void abrirVentanaSupervisor() {
+    public void abrirVentanaEntidad(String entidad , int width, int height) {
 
         try {
             FXMLLoader loader = new FXMLLoader();
-            Parent root = loader.load(getClass().getResource("../Interfaz/VentanaSupervisor").openStream());
-            ControladorVentanaSupervisor controlador = loader.getController();
-            controlador.gestorBDSupervisor = gestorBase;
+            Parent root = loader.load(getClass().getResource("../Interfaz/"+entidad+".fxml").openStream());
+
+            buscarControladorYSetGestor(entidad, loader); //Busca el controlador dependiendo de la entidad para setearle el gestor de base correspondiente
             Stage escenario = new Stage();
-            escenario.setTitle("Supervisor");
-            escenario.setScene(new Scene(root, 1053, 417));
+            escenario.setTitle(entidad);
+            escenario.setScene(new Scene(root, width, height)); //TODO Cambiarlo(Cambiar los valores de width y height) en cada funcion dependiendo de la ventana.
             escenario.show();
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+    }
+
+    public void buscarControladorYSetGestor(String entidad, FXMLLoader loader){
+
+        switch(entidad){
+
+            case "Supervisor":
+                ControllerSupervisor controladorSupervisor = loader.getController();
+                controladorSupervisor.gestorBDSupervisor = gestorBase;
+                break;
+            case "Empleado":
+                ControladorVentanaEmpleado controladorEmpleado = loader.getController();
+                controladorEmpleado.gestorBDEmpleado = gestorBase;
+                break;
+            case "Cliente":
+                ControladorVentanaCliente controladorCliente = loader.getController();
+                controladorCliente.gestorBDCliente = gestorBase;
         }
 
     }

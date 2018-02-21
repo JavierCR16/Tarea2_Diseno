@@ -1,6 +1,7 @@
 package Controladores;
 
 import Controladores.ControllerDetallesTicket;
+import Gestores.GestorBD;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -41,6 +42,8 @@ public class ControllerSupervisor implements Initializable {
     public ListView perctPorEmpleado;
     @FXML
     public Button actualizar;
+
+    GestorBD gestorBDSupervisor;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
