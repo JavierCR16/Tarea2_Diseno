@@ -1,5 +1,6 @@
 package Gestores;
 
+import com.sun.org.apache.regexp.internal.RE;
 import javafx.scene.control.Alert;
 
 import java.sql.*;
@@ -129,4 +130,33 @@ public class GestorBD {
         return false;
     }
 
+    public void agregarCliente(String nombre){
+
+        String sqlCliente = "INSERT INTO CLIENTE (NOMBRE) VALUES (?)";
+        try{
+            PreparedStatement insertarCliente = conexion.prepareStatement(sqlCliente, Statement.RETURN_GENERATED_KEYS);
+            insertarCliente.setString(1,nombre);
+            insertarCliente.executeUpdate();
+            ResultSet buscarUltimoID = insertarCliente.getGeneratedKeys();
+            int ultimoId = 0;
+
+            if (buscarUltimoID.next()) {
+                 ultimoId = buscarUltimoID.getInt(1);
+            }
+        //Aqui se invoca el stored procedure para generar un login al cliente.
+
+            CallableStatement crearLogin = conexion.prepareCall("{call crearLogin(?,?)}");
+            crearLogin.setString(1,nombre);
+            crearLogin.setString(2,String.valueOf(ultimoId));
+            crearLogin.executeUpdate();
+
+        }catch(SQLException e){
+
+            invocarAlerta(nombre+" ya existe en la base de datos");
+
+        }
+
+
+
+    }
 }
