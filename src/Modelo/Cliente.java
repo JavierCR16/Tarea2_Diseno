@@ -7,12 +7,13 @@ public class Cliente {
     public String nombre;
     public GestorBD gestorBD;
 
-    public Cliente(String nombre, int id){
+    public Cliente(String nombre, int id, GestorBD gestorBD){
+        this.gestorBD = gestorBD;
         this.nombre = nombre;
         this.ID = id;//TODO Sacar el ID de la base e insertar al cliente nuevo en la base
     }
 
-    public void agregarTicket(String asunto){
-        gestorBD.agregarTicket(asunto, this.ID);
+    public boolean agregarTicket(String asunto){
+        return gestorBD.agregarTicket(asunto, this.ID);
     }
 }

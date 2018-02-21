@@ -216,11 +216,13 @@ public class GestorBD {
         }
     }
 
-    public void agregarTicket(String asunto, int idCliente){
-        String sqlCliente = "INSERT INTO TICKET (ASUNTO) VALUES (?)";
+    public boolean agregarTicket(String asunto, int idCliente){
+        String sqlCliente = "INSERT INTO TICKET (ASUNTO, IDCLIENTE, FECHA) VALUES (?, ?, ?)";
         try {
             PreparedStatement insertarTicket = conexion.prepareStatement(sqlCliente, Statement.RETURN_GENERATED_KEYS);
             insertarTicket.setString(1, asunto);
+            insertarTicket.setInt(2, idCliente);
+            insertarTicket.setDate(3, new Date(new java.util.Date().getTime()));
             insertarTicket.executeUpdate();
 
             ResultSet buscarUltimoID = insertarTicket.getGeneratedKeys();
@@ -231,6 +233,8 @@ public class GestorBD {
         } catch (SQLException e) {
             e.printStackTrace();
             invocarAlerta("Error en la base de datos");
+            return false;
         }
+        return true;
     }
 }

@@ -56,16 +56,14 @@ public class ControladorVentanaLogin implements Initializable {
             String nombreSuper = nombreSupervisor.getText();
             int idSuper = Integer.valueOf(idSupervisor.getText());
 
-            loguearEntidad(nombreSuper,idSuper,"Supervisor",1200,600);
+            loguearEntidad(nombreSuper,idSuper,"Supervisor",600,400);
 
         });
 
         ingresarEmpleado.setOnAction(event -> {
             String nombreEmp = nombreEmpleado.getText();
             int idEmp = Integer.valueOf(idEmpleado.getText());
-
             loguearEntidad(nombreEmp,idEmp,"Empleado",1200,600);
-
         });
 
 
@@ -73,7 +71,7 @@ public class ControladorVentanaLogin implements Initializable {
         ingresarCliente.setOnAction(event -> {
             String nombreCli = nombreCliente.getText();
             int idCli = Integer.valueOf(idCliente.getText());
-            loguearEntidad(nombreCli,idCli,"Cliente",1200,600);
+            loguearEntidad(nombreCli,idCli,"Cliente",606,414);
         });
 
 
@@ -106,6 +104,8 @@ public class ControladorVentanaLogin implements Initializable {
             escenario.setTitle(entidad);
             escenario.setScene(new Scene(root, width, height)); //TODO Cambiarlo(Cambiar los valores de width y height) en cada funcion dependiendo de la ventana.
             escenario.show();
+            Stage actual = (Stage) ingresarEmpleado.getScene().getWindow();
+            actual.close();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -130,7 +130,7 @@ public class ControladorVentanaLogin implements Initializable {
             case "Cliente":
                 ControladorVentanaCliente controladorCliente = loader.getController();
                 controladorCliente.gestorBDCliente = gestorBase;
-                controladorCliente.clienteLogueado = new Cliente(nombre,id);
+                controladorCliente.clienteLogueado = new Cliente(nombre, id, this.gestorBase);
         }
 
     }

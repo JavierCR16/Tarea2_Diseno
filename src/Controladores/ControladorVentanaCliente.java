@@ -5,7 +5,7 @@ import Modelo.Cliente;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 public class ControladorVentanaCliente implements Initializable {
 
     @FXML
-    public TextField asuntoField;
+    public TextArea asuntoField;
     @FXML
     public Button guardar;
     GestorBD gestorBDCliente;
@@ -24,7 +24,14 @@ public class ControladorVentanaCliente implements Initializable {
 
     public void initialize(URL fxmlLocations, ResourceBundle resources){
         guardar.setOnAction(event -> {
-            clienteLogueado.agregarTicket(asuntoField.getText());
+            boolean exito = clienteLogueado.agregarTicket(asuntoField.getText());
+            if (exito){
+                this.gestorBDCliente.invocarAlerta("El ticket fue enviado con exito");
+                asuntoField.clear();
+            }
+            else{
+                this.gestorBDCliente.invocarAlerta("Error en la base de datos");
+            }
         });
 
     }

@@ -6,11 +6,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane prefHeight="414.0" prefWidth="606.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.ControladorVentanaCliente">
    <children>
-      <TextField fx:id="asuntoField" layoutX="28.0" layoutY="33.0" prefHeight="335.0" prefWidth="544.0" />
       <Label layoutX="14.0" layoutY="14.0" text="Agregar Asunto del Ticket" />
       <Button fx:id="guardar" layoutX="513.0" layoutY="375.0" mnemonicParsing="false" text="Guardar" />
+      <TextArea fx:id="asuntoField" layoutX="18.0" layoutY="43.0" prefHeight="328.0" prefWidth="571.0" />
    </children>
 </AnchorPane>
