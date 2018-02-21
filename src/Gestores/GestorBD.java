@@ -160,12 +160,11 @@ public class GestorBD {
 
             case "Empleado":
 
-                String sqlEmpleado = "INSERT INTO EMPLEADO (IDSUPERVISOR, NOMBRE,ESPECIALIZACION) VALUES (?, ?, ?)";
+                String sqlEmpleado = "INSERT INTO EMPLEADO (IDSUPERVISOR, NOMBRE) VALUES (?, ?, ?)";
                 try {
                     PreparedStatement insertarEmpleado = conexion.prepareStatement(sqlEmpleado, Statement.RETURN_GENERATED_KEYS);
                     insertarEmpleado.setInt(1, idSupervisor); //TODO PONER ID SUPERVISOR
                     insertarEmpleado.setString(2, nombre);
-                    insertarEmpleado.setInt(3, encontrarIDEspecializacion(GradoImportancia.SIN_CATALOGAR.toString()));
                     insertarEmpleado.executeUpdate();
 
                     ResultSet buscarUltimoID = insertarEmpleado.getGeneratedKeys();
