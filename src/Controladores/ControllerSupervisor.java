@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -50,18 +51,30 @@ public class ControllerSupervisor implements Initializable {
         //TODO Cargar datos de la base en los listView de clientes, empleados y tickets
         detallesTicket.setOnAction(event -> {
             //Ticket selected = (Ticket) listTickets.getSelectionModel().getSelectedItem();
-            try {
-                Stage escenario = new Stage();
-                FXMLLoader loader = new FXMLLoader();
-                Parent root = loader.load(getClass().getResource("interfaz/DetallesTicket.fxml").openStream());
-                ControllerDetallesTicket controladorJuego = loader.getController();
-                escenario.setScene(new Scene(root,1000,780));
-                escenario.setTitle("Kakuro");
-                escenario.show();
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-        });
 
+        });
+        agregarCliente.setOnAction(event -> {
+            abrirAgregar("Cliente");
+        });
+        agregarEmpleado.setOnAction(event -> {
+            abrirAgregar("Empleado");
+        });
+    }
+
+    public void abrirAgregar(String option){
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            Parent root = loader.load(getClass().getResource("../Interfaz/Agregar.fxml").openStream());
+            ControllerAgregar controllerAgregar = loader.getController();
+            controllerAgregar.gestorBD = this.gestorBDSupervisor;
+            controllerAgregar.caso = option;
+            Stage escenario = new Stage();
+            escenario.setTitle("Agregar "+ option);
+            escenario.setScene(new Scene(root, 273, 146));
+            escenario.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

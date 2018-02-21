@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="146.0" prefWidth="273.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interfaz.Agregar">
+   <children>
+      <TextField fx:id="nombreField" layoutX="87.0" layoutY="29.0" />
+      <Label layoutX="24.0" layoutY="33.0" text="Nombre" />
+      <Button fx:id="agregar" layoutX="107.0" layoutY="73.0" mnemonicParsing="false" text="Agregar" />
+   </children>
+</AnchorPane>

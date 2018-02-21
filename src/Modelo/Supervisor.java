@@ -4,10 +4,16 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Supervisor {
-    public String ID;
+    public int ID;
+    public String nombre;
     //TODO Sacar los datos de tickets y empleados de la base;
     public ArrayList<Ticket> tickets = new ArrayList<>();
     public ArrayList<Empleado> empleados = new ArrayList<>();
+
+    public Supervisor(String nombre, int ID){
+        this.ID = ID;
+        this.nombre = nombre;
+    }
 
     public void CatalogarTicket(int idTicket, GradoImportancia grado){
         for (Ticket ticket : tickets) {

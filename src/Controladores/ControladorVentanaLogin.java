@@ -1,6 +1,7 @@
 package Controladores;
 
 import Gestores.GestorBD;
+import Modelo.Supervisor;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -111,13 +112,14 @@ public class ControladorVentanaLogin implements Initializable {
 
     }
 
-    public void buscarControladorYSetGestor(String entidad, FXMLLoader loader){
+    public void buscarControladorYSetGestor(String entidad, FXMLLoader loader, String nombre, int ID){
 
         switch(entidad){
 
             case "Supervisor":
                 ControllerSupervisor controladorSupervisor = loader.getController();
                 controladorSupervisor.gestorBDSupervisor = gestorBase;
+                controladorSupervisor.supervisor = new Supervisor(nombre, ID);
                 break;
             case "Empleado":
                 ControladorVentanaEmpleado controladorEmpleado = loader.getController();

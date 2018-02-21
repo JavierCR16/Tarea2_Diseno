@@ -1,6 +1,6 @@
 package Gestores;
 
-import com.sun.org.apache.regexp.internal.RE;
+import Modelo.GradoImportancia;
 import javafx.scene.control.Alert;
 
 import java.sql.*;
@@ -130,33 +130,53 @@ public class GestorBD {
         return false;
     }
 
-    public void agregarCliente(String nombre){
-
-        String sqlCliente = "INSERT INTO CLIENTE (NOMBRE) VALUES (?)";
-        try{
-            PreparedStatement insertarCliente = conexion.prepareStatement(sqlCliente, Statement.RETURN_GENERATED_KEYS);
-            insertarCliente.setString(1,nombre);
-            insertarCliente.executeUpdate();
-            ResultSet buscarUltimoID = insertarCliente.getGeneratedKeys();
-            int ultimoId = 0;
-
-            if (buscarUltimoID.next()) {
-                 ultimoId = buscarUltimoID.getInt(1);
-            }
-        //Aqui se invoca el stored procedure para generar un login al cliente.
-
-            CallableStatement crearLogin = conexion.prepareCall("{call crearLogin(?,?)}");
-            crearLogin.setString(1,nombre);
-            crearLogin.setString(2,String.valueOf(ultimoId));
-            crearLogin.executeUpdate();
-
-        }catch(SQLException e){
-
-            invocarAlerta(nombre+" ya existe en la base de datos");
-
+    public void agregarCliente(String nombre, String opcion){
+        switch(opcion){
+            case "Cliente":
+                String sqlCliente = "INSERT INTO CLIENTE (NOMBRE) VALUES (?)";
+                try{
+                    PreparedStatement insertarCliente = conexion.prepareStatement(sqlCliente, Statement.RETURN_GENERATED_KEYS);
+                    insertarCliente.setString(1,nombre);
+                    insertarCliente.executeUpdate();
+                    ResultSet buscarUltimoID = insertarCliente.getGeneratedKeys();
+                    int ultimoId = 0;
+                    if (buscarUltimoID.next()) {
+                        ultimoId = buscarUltimoID.getInt(1);
+                    }
+                    //Aqui se invoca el stored procedure para generar un login al cliente.
+                    generarLogIN(nombre, String.valueOf(ultimoId));
+                }catch(SQLException e){
+                    invocarAlerta(nombre+" ya existe en la base de datos");
+                }
+            case "Empleado":
+                String sqlEmpleado = "INSERT INTO EMPLEADO (NOMBRE, ESPECIALIZACION, IDSUPERVISOR) VALUES (?, ?, ?)";
+                try{
+                    PreparedStatement insertarEmpleado = conexion.prepareStatement(sqlEmpleado, Statement.RETURN_GENERATED_KEYS);
+                    insertarEmpleado.setString(1, nombre);
+                    insertarEmpleado.setString(2, GradoImportancia.SIN_CATALOGAR.toString());
+                    insertarEmpleado.setInt(3, );
+                    insertarEmpleado.executeUpdate();
+                    ResultSet buscarUltimoID = insertarEmpleado.getGeneratedKeys();
+                    int ultimoId = 0;
+                    if (buscarUltimoID.next()) {
+                        ultimoId = buscarUltimoID.getInt(1);
+                    }
+                    //Aqui se invoca el stored procedure para generar un login al cliente.
+                    generarLogIN(nombre, String.valueOf(ultimoId));
+                }catch(SQLException e){
+                    invocarAlerta(nombre+" ya existe en la base de datos");
+                }
         }
+    }
 
-
-
+    public void generarLogIN(String nombre, String contrasena){
+        try {
+            CallableStatement procedureLogIn = conexion.prepareCall("{call crearLogin(?, ?)}");
+            procedureLogIn.setString(1, nombre);
+            procedureLogIn.setString(2, contrasena);
+            procedureLogIn.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
