@@ -54,7 +54,7 @@ public class GestorBD {
         }
     }
 
-    public boolean establecerConexionUsuario(String username, String password) {
+    public void establecerConexionUsuario(String username, String password) {
 
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -63,13 +63,9 @@ public class GestorBD {
             conexion = DriverManager.getConnection(connectionUrl);
             estado = conexion.createStatement();
 
-            return true;
-
         } catch (Exception e) {
-            cerrarConexion();
             e.printStackTrace();
         }
-        return false;
 
     }
 

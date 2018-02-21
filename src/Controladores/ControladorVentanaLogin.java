@@ -50,6 +50,10 @@ public class ControladorVentanaLogin implements Initializable {
 
         ingresarSupervisor.setOnAction(event -> {
 
+            String nombreSuper = nombreSupervisor.getText();
+            int id = Integer.valueOf(idSupervisor.getText());
+
+            loguearSupervisor(nombreSuper,id);
 
         });
 
@@ -70,6 +74,7 @@ public class ControladorVentanaLogin implements Initializable {
 
 
         if (gestorBase.existeConexionUsuarios(nombre, String.valueOf(id)) && gestorBase.existeSupervisor(nombre, id)) {
+            gestorBase.existeConexionUsuarios(nombre,String.valueOf(id));
             abrirVentanaSupervisor();
         }
         else{
@@ -87,7 +92,7 @@ public class ControladorVentanaLogin implements Initializable {
             ControladorVentanaSupervisor controlador = loader.getController();
             controlador.gestorBDSupervisor = gestorBase;
             Stage escenario = new Stage();
-            escenario.setTitle("Participante");
+            escenario.setTitle("Supervisor");
             escenario.setScene(new Scene(root, 1053, 417));
             escenario.show();
 

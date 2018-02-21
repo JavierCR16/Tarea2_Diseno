@@ -17,7 +17,7 @@
                   <Label layoutX="44.0" layoutY="124.0" text="Nombre" />
                   <Label layoutX="54.0" layoutY="55.0" text="ID" />
                   <TextField fx:id="idSupervisor" layoutX="123.0" layoutY="51.0" />
-                  <TextField fx:id="nombreSupervisor" layoutX="123.0" layoutY="120.0" />
+                  <TextField fx:id="nombreSupervisor" layoutX="123.0" layoutY="129.0" />
                   <Button fx:id="ingresarSupervisor" layoutX="138.0" layoutY="185.0" mnemonicParsing="false" text="Ingresar" />
                </children></AnchorPane>
       </content>
