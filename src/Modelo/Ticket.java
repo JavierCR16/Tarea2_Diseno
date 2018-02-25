@@ -11,6 +11,7 @@ public class Ticket {
     public String asunto;
     public int id;
     private Cliente cliente;
+    private Empleado empleado;
     public static ArrayList<Ticket> tickets = new ArrayList<>();
 
     public Ticket(String asunto, Cliente cliente){
@@ -31,4 +32,21 @@ public class Ticket {
     public void setEstado(EstadoTicket estado) {
         this.estado = estado;
     }
+
+    public int[] getDistribTicketsXFecha(Date fechaIni, Date fechaFin) {
+        String query =
+                "SELECT COUNT(*) FROM Tickets WHERE fecha BETWEEN " +
+                        fechaIni.toString() + ", " + fechaFin.toString() + "GROUP BY categoria;";
+        //TODO Hacer bien el query y convertir el resultado a tablas
+        return new int[]{0, 0, 0};//TODO cambiar valores por resultado del query
+    }
+
+    public String getCategoriaMasRecibida() {
+        String query = "SELECT categoria, COUNT(*) AS cantidad FROM Tickets WHERE categoria != \"SIN_CATALOGAR\" " +
+                "GROUP BY categoria ORDER BY cantidad LIMIT 1;";
+        //TODO Revisar query y cambiar resultado de funcion
+        return "SIN_CATALOGAR";
+    }
+
+
 }

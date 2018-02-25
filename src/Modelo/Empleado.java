@@ -32,4 +32,9 @@ public class Empleado {
     public void setEspecializacion(GradoImportancia especializacion) {
         this.especializacion = especializacion;
     }
+
+    public void getPorcentAtencionXEmpleado() {
+        String query = "SELECT empleado, COUNT(*)/100 AS porcentaje FROM Tickets GROUP BY empleado ORDER BY porcentaje;";
+        //TODO Revisar query y convertir resultado a Observable list
+    }
 }
