@@ -1,15 +1,17 @@
 package Modelo;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Ticket {
-    public Date fecha;
-    public int clienteID;
+    private Date fecha;
+    private int clienteID;
     public GradoImportancia categoria;
     public EstadoTicket estado;
     public String asunto;
     public int id;
-    public Cliente cliente;
+    private Cliente cliente;
+    public static ArrayList<Ticket> tickets = new ArrayList<>();
 
     public Ticket(String asunto, Cliente cliente){
         this.cliente = cliente;
@@ -19,6 +21,7 @@ public class Ticket {
         this.fecha = new Date();
         this.asunto = asunto;
         this.clienteID = cliente.ID;
+        tickets.add(this);
     }
 
     public void setCategoria(GradoImportancia categoria) {

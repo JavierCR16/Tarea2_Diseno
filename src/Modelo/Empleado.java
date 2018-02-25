@@ -1,14 +1,19 @@
 package Modelo;
 
+import java.util.ArrayList;
+
 public class Empleado {
     public String nombre;
     public int ID;
     public GradoImportancia especializacion;
     public Ticket atendiendo;
+    //FIXME DUDA CON JAVI
+    public static ArrayList<Empleado> empleados = new ArrayList<>();
 
     public Empleado(String nombre, int id){
         this.nombre = nombre;
         this.ID = id; //TODO Sacar el ID  de la base e insertar al nuevo empleado
+        empleados.add(this);
     }
 
     public void solicitarTicket(){

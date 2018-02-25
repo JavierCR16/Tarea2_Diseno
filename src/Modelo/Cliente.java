@@ -4,7 +4,7 @@ import Gestores.GestorBD;
 
 public class Cliente {
     public int ID;
-    public String nombre;
+    private String nombre;
     public GestorBD gestorBD;
 
     public Cliente(String nombre, int id, GestorBD gestorBD){

@@ -7,24 +7,19 @@ import java.util.Date;
 
 public class Supervisor {
 
-    public int ID;
+    private int ID;
 
-    public String nombre;
+    private String nombre;
 
     public GestorBD gestorSupervisor;
 
-    //TODO Sacar los datos de tickets y empleados de la base;
-    public ArrayList<Ticket> tickets = new ArrayList<>();
-    public ArrayList<Empleado> empleados = new ArrayList<>();
-
     public Supervisor(String nombre, int ID) {
-
         this.nombre = nombre;
         this.ID = ID;
     }
 
-    public void CatalogarTicket(int idTicket, GradoImportancia grado) {
-        for (Ticket ticket : tickets) {
+    public void catalogarTicket(int idTicket, GradoImportancia grado) {
+        for (Ticket ticket : Ticket.tickets) {
             if (ticket.id == idTicket) {
                 ticket.setCategoria(grado);
                 //TODO Actualizar la base con los datos del ticket
@@ -34,7 +29,7 @@ public class Supervisor {
     }
 
     public void especializarEmpleado(int idEmpleado, GradoImportancia especializacion) {
-        for (Empleado empleado : empleados) {
+        for (Empleado empleado : Empleado.empleados) {
             if (empleado.ID == idEmpleado) {
                 empleado.setEspecializacion(especializacion);
                 //TODO Actualizar la base con los datos del empleado
@@ -52,7 +47,9 @@ public class Supervisor {
         gestorSupervisor.agregarClienteEmpleado(nombre, "Cliente",ID);
     }
 
-    //Funciones para estadisticas
+    //TODO Eliminar funciones de estadisticas
+
+    /*Funciones para estadisticas
     public int[] getDistribTicketsXFecha(Date fechaIni, Date fechaFin) {
         String query =
                 "SELECT COUNT(*) FROM Tickets WHERE fecha BETWEEN " +
@@ -72,6 +69,7 @@ public class Supervisor {
         String query = "SELECT empleado, COUNT(*)/100 AS porcentaje FROM Tickets GROUP BY empleado ORDER BY porcentaje;";
         //TODO Revisar query y convertir resultado a Observable list
     }
+    */
 
     public int getID() {
         return ID;
