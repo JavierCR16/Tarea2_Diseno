@@ -64,11 +64,13 @@ public class ControllerSupervisor implements Initializable {
     @FXML
     public TableColumn columnaIdTicket;
     @FXML
-    public TableColumn columnaNombreCliente;
+    public TableColumn columnaNombreClienteTicket;
     @FXML
     public TableColumn columnaAsunto;
     @FXML
     public TableColumn columnaIdCliente;
+    @FXML
+    public TableColumn columnaNombreCliente;
 
 
 
@@ -107,7 +109,7 @@ public class ControllerSupervisor implements Initializable {
             abrirAgregar("Empleado");
         });
         detallesCliente.setOnAction(event -> {
-            abrirDetalles(true, new Cliente("Bryan", 0));
+            abrirDetalles(true, (Cliente) listClientes.getSelectionModel().getSelectedItem());
         });
         detallesEmpleado.setOnAction(event -> {
             Empleado e = (Empleado) tablaEmpleados.getSelectionModel().getSelectedItem();
@@ -150,7 +152,7 @@ public class ControllerSupervisor implements Initializable {
         if(caso){
             Cliente cliente1 = (Cliente) persona;
             escenario.setTitle("Detalles Cliente");
-            c.idO = String.valueOf(cliente1.ID);
+            c.idO = cliente1.getID();
             c.nombreO = cliente1.getNombre();
             c.caso = caso;
         }
@@ -205,5 +207,7 @@ public class ControllerSupervisor implements Initializable {
     public void configurarColumnas(){
         columnaIdEmpleado.setCellValueFactory(new PropertyValueFactory<Empleado,String>("ID"));
         columnaNombreEmpleado.setCellValueFactory(new PropertyValueFactory<Empleado,String>("nombre"));
+        columnaIdCliente.setCellValueFactory(new PropertyValueFactory<Cliente,String>("ID"));
+        columnaNombreCliente.setCellValueFactory(new PropertyValueFactory<Cliente,String>("nombre"));
     }
 }

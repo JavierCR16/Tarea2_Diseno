@@ -130,7 +130,7 @@ public class ControladorVentanaLogin implements Initializable {
             case "Cliente":
                 ControladorVentanaCliente controladorCliente = loader.getController();
                 controladorCliente.gestorBDCliente = gestorBase;
-                controladorCliente.clienteLogueado = new Cliente(nombre, id);
+                controladorCliente.clienteLogueado = new Cliente(nombre, String.valueOf(id));
                 controladorCliente.clienteLogueado.gestorBD = gestorBase;
         }
     }

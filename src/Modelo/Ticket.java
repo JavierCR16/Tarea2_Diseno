@@ -24,7 +24,6 @@ public class Ticket {
         this.estado = EstadoTicket.ATENDIDO.SIN_ATENDER;
         this.fecha = new Date();
         this.asunto = asunto;
-        this.clienteID = cliente.ID;
         tickets.add(this);
     }
 

@@ -24,7 +24,7 @@
                         <TableView fx:id="listTickets" layoutX="23.0" layoutY="48.0" prefHeight="237.0" prefWidth="553.0">
                           <columns>
                             <TableColumn fx:id="columnaIdTicket" prefWidth="53.0" text="ID" />
-                            <TableColumn fx:id="columnaNombreCliente" prefWidth="315.0" text="Nombre Del Cliente" />
+                            <TableColumn fx:id="columnaNombreClienteTicket" prefWidth="315.0" text="Nombre Del Cliente" />
                               <TableColumn fx:id="columnaAsunto" prefWidth="255.0" text="Asunto " />
                           </columns>
                            <columnResizePolicy>

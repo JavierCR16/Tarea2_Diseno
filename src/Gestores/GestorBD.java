@@ -270,7 +270,7 @@ public class GestorBD {
 
             while(ticketsObtenidos.next()){
                 String asuntoTicket = ticketsObtenidos.getString("ticketAsun");
-                Cliente cliente = new Cliente(ticketsObtenidos.getString("nomCli"),Integer.parseInt(ticketsObtenidos.getString("idCli")));
+                Cliente cliente = new Cliente(ticketsObtenidos.getString("nomCli"),ticketsObtenidos.getString("idCli"));
 
                 Ticket ticketSinCategorizar = new Ticket(asuntoTicket,cliente);
                 ticketSinCategorizar.setId(Integer.parseInt(ticketsObtenidos.getString("ticketId")));
@@ -299,7 +299,7 @@ public class GestorBD {
                 String nombreCliente = clientesObtenidos.getString("NOMBRE");
                 String idCliente = clientesObtenidos.getString("ID");
 
-              clientes.add(new Cliente(nombreCliente,Integer.parseInt(idCliente)));
+              clientes.add(new Cliente(nombreCliente,idCliente));
             }
 
         }catch(SQLException e){
