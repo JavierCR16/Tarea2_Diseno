@@ -1,17 +1,14 @@
 package Modelo;
 
 import javafx.beans.property.SimpleStringProperty;
-import sun.java2d.pipe.SpanShapeRenderer;
 
 import java.util.ArrayList;
 
 public class Empleado {
-
     public SimpleStringProperty nombre;
     public SimpleStringProperty ID;
     public GradoImportancia especializacion;
     public Ticket atendiendo;
-    //FIXME DUDA CON JAVI
     public static ArrayList<Empleado> empleados = new ArrayList<>();
 
     public Empleado(String nombre, String id){

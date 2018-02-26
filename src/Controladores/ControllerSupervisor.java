@@ -67,6 +67,8 @@ public class ControllerSupervisor implements Initializable {
     public TableColumn columnaNombreCliente;
     @FXML
     public TableColumn columnaAsunto;
+    @FXML
+    public TableColumn columnaIdCliente;
 
 
 
@@ -89,9 +91,12 @@ public class ControllerSupervisor implements Initializable {
         agregarEmpleado.setOnAction(event -> {
             abrirAgregar("Empleado");
         });
-
-
-
+        detallesCliente.setOnAction(event -> {
+            abrirDetalles(true, new Cliente("Bryan", 0));
+        });
+        detallesEmpleado.setOnAction(event -> {
+            abrirDetalles(false, new Empleado("Bryan", "0"));
+        });
     }
 
     public void abrirAgregar(String option){
@@ -114,22 +119,48 @@ public class ControllerSupervisor implements Initializable {
         }
     }
 
-    public void cargarDatosDefecto(){
+    public void abrirDetalles(Boolean caso, Object persona){
+        //True cliente False empleado
+        FXMLLoader loader = new FXMLLoader();
+        Parent root = null;
+        ControllerEdit c = null;
+        try {
+            root = loader.load(getClass().getResource("../Interfaz/editPersona.fxml").openStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        c = loader.getController();
+        Stage escenario = new Stage();
+        if(caso){
+            Cliente cliente1 = (Cliente) persona;
+            escenario.setTitle("Detalles Cliente");
+            c.idO = String.valueOf(cliente1.ID);
+            c.nombreO = cliente1.getNombre();
+            c.caso = caso;
+        }
+        else{
+            Empleado empleado = (Empleado) persona;
+            escenario.setTitle("Detalles Empleado");
+            c.idO = String.valueOf(empleado.ID);
+            c.nombreO = empleado.getNombre();
+            c.caso = caso;
+        }
+        c.iniciar();
+        escenario.setScene(new Scene(root, 300, 215));
+        escenario.show();
+    }
 
+
+    public void cargarDatosDefecto(){
         ArrayList<Empleado> empleadosSinEspecializar = gestorBDSupervisor.getEmpleadosSinEspecializar();
         ArrayList<Ticket> ticketsSinCategorizar = gestorBDSupervisor.getTicketsSinCategorizar();
         ArrayList<Cliente> clientes = gestorBDSupervisor.getClientes();
-
         ObservableList<Empleado> listaEmpleados = FXCollections.observableArrayList(empleadosSinEspecializar);
         tablaEmpleados.setItems(listaEmpleados);
-
     }
 
     public void configurarColumnas(){
-
-            columnaIdEmpleado.setCellValueFactory(new PropertyValueFactory<Empleado,String>("ID"));
-            columnaNombreEmpleado.setCellValueFactory(new PropertyValueFactory<Empleado,String>("nombre"));
-
-
+        columnaIdEmpleado.setCellValueFactory(new PropertyValueFactory<Empleado,String>("ID"));
+        columnaNombreEmpleado.setCellValueFactory(new PropertyValueFactory<Empleado,String>("nombre"));
     }
 }
