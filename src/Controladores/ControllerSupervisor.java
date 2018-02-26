@@ -80,6 +80,7 @@ public class ControllerSupervisor implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         configurarColumnas();
         cargarDatosDefecto();
+
         //TODO Cargar datos de la base en los listView de clientes, empleados y tickets
         detallesTicket.setOnAction(event -> {
             //Ticket selected = (Ticket) listTickets.getSelectionModel().getSelectedItem();

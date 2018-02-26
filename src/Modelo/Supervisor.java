@@ -27,7 +27,7 @@ public class Supervisor {
             }
         }
     }
-
+/*
     public void especializarEmpleado(int idEmpleado, GradoImportancia especializacion) {
         for (Empleado empleado : Empleado.empleados) {
             if (empleado.ID == idEmpleado) {
@@ -36,7 +36,7 @@ public class Supervisor {
                 break;
             }
         }
-    }
+    }*/
 
     public void agregarEmpleado(String nombre) {
         gestorSupervisor.agregarClienteEmpleado(nombre, "Empleado",ID);
