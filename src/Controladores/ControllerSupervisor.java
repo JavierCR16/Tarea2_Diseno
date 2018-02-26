@@ -154,8 +154,8 @@ public class ControllerSupervisor implements Initializable {
 
     public void cargarDatosDefecto(){
         ArrayList<Empleado> empleadosSinEspecializar = gestorBDSupervisor.getEmpleadosSinEspecializar();
-        ArrayList<Ticket> ticketsSinCategorizar = gestorBDSupervisor.getTicketsSinCategorizar();
-        ArrayList<Cliente> clientes = gestorBDSupervisor.getClientes();
+      //  ArrayList<Ticket> ticketsSinCategorizar = gestorBDSupervisor.getTicketsSinCategorizar();
+      //  ArrayList<Cliente> clientes = gestorBDSupervisor.getClientes();
         ObservableList<Empleado> listaEmpleados = FXCollections.observableArrayList(empleadosSinEspecializar);
         tablaEmpleados.setItems(listaEmpleados);
     }
