@@ -120,6 +120,7 @@ public class ControladorVentanaLogin implements Initializable {
                 ControllerSupervisor controladorSupervisor = loader.getController();
                 controladorSupervisor.gestorBDSupervisor = gestorBase;
                 controladorSupervisor.supervisorLogueado = new Supervisor(nombre,id);
+                controladorSupervisor.supervisorLogueado.gestorSupervisor = gestorBase;
                 controladorSupervisor.cargarDatosDefecto();
                 break;
             case "Empleado":

@@ -1,6 +1,7 @@
 package Controladores;
 
 import Modelo.GradoImportancia;
+import Modelo.Supervisor;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -25,20 +26,24 @@ public class ControllerEdit implements Initializable {
     public ComboBox<GradoImportancia> comboBox;
     @FXML
     public Label especializacion;
+    public Supervisor supervisor;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if (!caso){
             guardar.setOnAction(event -> {
                 GradoImportancia gradoImportancia = comboBox.getValue();
+                int id = Integer.valueOf(this.id.getText());
+                String esp = gradoImportancia.toString();
+                supervisor.gestorSupervisor.actualizarEmpleado(id, esp);
                 Stage actual = (Stage) guardar.getScene().getWindow();
                 actual.close();
-                //TODO Query a la base para actualizar
             });
         }
     }
 
-    public void iniciar(){
+    public void iniciar(Supervisor supervisor){
+        this.supervisor = supervisor;
         if(caso){
             comboBox.setVisible(false);
             especializacion.setVisible(false);

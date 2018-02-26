@@ -72,11 +72,9 @@ public class ControllerSupervisor implements Initializable {
     @FXML
     public TableColumn columnaNombreCliente;
 
+    public GestorBD gestorBDSupervisor;
 
-
-    GestorBD gestorBDSupervisor;
-
-    Supervisor supervisorLogueado;
+    public Supervisor supervisorLogueado;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -163,7 +161,7 @@ public class ControllerSupervisor implements Initializable {
             c.nombreO = empleado.getNombre();
             c.caso = caso;
         }
-        c.iniciar();
+        c.iniciar(this.supervisorLogueado);
         escenario.setScene(new Scene(root, 300, 215));
         escenario.show();
     }
@@ -171,10 +169,13 @@ public class ControllerSupervisor implements Initializable {
 
     public void cargarDatosDefecto(){
         ArrayList<Empleado> empleadosSinEspecializar = gestorBDSupervisor.getEmpleadosSinEspecializar();
-      //  ArrayList<Ticket> ticketsSinCategorizar = gestorBDSupervisor.getTicketsSinCategorizar();
-      //  ArrayList<Cliente> clientes = gestorBDSupervisor.getClientes();
+        //ArrayList<Ticket> ticketsSinCategorizar = gestorBDSupervisor.getTicketsSinCategorizar();
+        ArrayList<Cliente> clientes = gestorBDSupervisor.getClientes();
         ObservableList<Empleado> listaEmpleados = FXCollections.observableArrayList(empleadosSinEspecializar);
+        ObservableList<Cliente> listaCliente = FXCollections.observableArrayList(clientes);
+        //ObservableList<Empleado> listaEmpleados = FXCollections.observableArrayList(empleadosSinEspecializar);
         tablaEmpleados.setItems(listaEmpleados);
+        listClientes.setItems(listaCliente);
     }
 
     public void actualizarInformacion(int opcion){

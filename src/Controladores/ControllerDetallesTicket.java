@@ -1,7 +1,9 @@
 package Controladores;
 
+import Modelo.GradoImportancia;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 
 import java.awt.*;
@@ -15,7 +17,7 @@ public class ControllerDetallesTicket implements Initializable {
     @FXML
     public Label fecha;
     @FXML
-    public ContextMenu categoria;
+    public ComboBox comboBox;
     @FXML
     public Label estado;
     @FXML
@@ -23,6 +25,6 @@ public class ControllerDetallesTicket implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        comboBox.getItems().addAll(GradoImportancia.values());
     }
 }

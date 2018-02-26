@@ -309,6 +309,20 @@ public class GestorBD {
         return clientes;
     }
 
+    public void actualizarEmpleado(int id, String especializacion){
+        int esp = encontrarIDEspecializacion(especializacion);
+        String sqlEmpleado = "UPDATE EMPLEADO SET ESPECIALIZACION = ? WHERE CODIGOTRABAJADOR = ?;";
+        try {
+            PreparedStatement updateEmpleado = conexion.prepareStatement(sqlEmpleado, Statement.RETURN_GENERATED_KEYS);
+            updateEmpleado.setInt(1, esp);
+            updateEmpleado.setInt(2, id);
+            updateEmpleado.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            invocarAlerta("Error al actualizar empleado");
+        }
+    }
+
 
 
 }
