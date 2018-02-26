@@ -158,7 +158,7 @@ public class GestorBD {
 
             case "Empleado":
 
-                String sqlEmpleado = "INSERT INTO EMPLEADO (IDSUPERVISOR, NOMBRE) VALUES (?, ?, ?)";
+                String sqlEmpleado = "INSERT INTO EMPLEADO (IDSUPERVISOR, NOMBRE) VALUES (?, ?)";
                 try {
                     PreparedStatement insertarEmpleado = conexion.prepareStatement(sqlEmpleado, Statement.RETURN_GENERATED_KEYS);
                     insertarEmpleado.setInt(1, idSupervisor); //TODO PONER ID SUPERVISOR
@@ -309,4 +309,7 @@ public class GestorBD {
         }
         return clientes;
     }
+
+
+
 }

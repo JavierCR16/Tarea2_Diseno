@@ -86,6 +86,20 @@ public class ControllerSupervisor implements Initializable {
             //Ticket selected = (Ticket) listTickets.getSelectionModel().getSelectedItem();
 
         });
+
+        actualizarEmpleados.setOnAction(event->{
+
+            actualizarInformacion(1);
+
+        });
+        actualizarTickets.setOnAction(event->{
+            actualizarInformacion(2);
+        });
+        actualizarClientes.setOnAction(event ->{
+
+            actualizarInformacion(3);
+        });
+
         agregarCliente.setOnAction(event -> {
             abrirAgregar("Cliente");
         });
@@ -158,6 +172,33 @@ public class ControllerSupervisor implements Initializable {
       //  ArrayList<Cliente> clientes = gestorBDSupervisor.getClientes();
         ObservableList<Empleado> listaEmpleados = FXCollections.observableArrayList(empleadosSinEspecializar);
         tablaEmpleados.setItems(listaEmpleados);
+    }
+
+    public void actualizarInformacion(int opcion){
+
+        switch(opcion){
+            case 1:
+                ArrayList<Empleado> empleados = gestorBDSupervisor.getEmpleadosSinEspecializar();
+
+                ObservableList<Empleado> listaEmpleados = FXCollections.observableArrayList(empleados);
+                tablaEmpleados.setItems(listaEmpleados);
+                break;
+            case 2:
+
+                  ArrayList<Ticket> ticketsSinCategorizar = gestorBDSupervisor.getTicketsSinCategorizar();
+
+                ObservableList<Ticket> listaTickets = FXCollections.observableArrayList(ticketsSinCategorizar);
+                listTickets.setItems(listaTickets);
+                break;
+            case 3:
+
+                ArrayList<Cliente> clientes = gestorBDSupervisor.getClientes();
+                ObservableList<Cliente> listaClientes= FXCollections.observableArrayList(clientes);
+                listClientes.setItems(listaClientes);
+                break;
+
+        }
+
     }
 
     public void configurarColumnas(){
