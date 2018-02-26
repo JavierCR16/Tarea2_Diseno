@@ -239,7 +239,7 @@ public class GestorBD {
     public ArrayList<Empleado> getEmpleadosSinEspecializar(){
         ArrayList<Empleado> empleadosNoEspecializados = new ArrayList<>();
 
-        String obtenerEmpleados = "SELECT EMPLEADO.CODIGOTRABAJADOR, EMPLEADO.NOMBRE FROM EMPLEADO " +
+        String obtenerEmpleados = "SELECT EMPLEADO.CODIGOTRABAJADOR as idEmp, EMPLEADO.NOMBRE as nomEmp FROM EMPLEADO,GRADOIMPORTANCIA " +
                 "WHERE EMPLEADO.ESPECIALIZACION = GRADOIMPORTANCIA.ID AND CATEGORIA = 'Sin_Catalogar' ";
 
         try{
@@ -247,8 +247,8 @@ public class GestorBD {
             ResultSet empleadosObtenidos = extraerEmpleados.executeQuery();
 
             while(empleadosObtenidos.next()){
-                String nombreEmpleado = empleadosObtenidos.getString("EMPLEADO.NOMBRE");
-                String idEmpleado = empleadosObtenidos.getString("EMPLEADO.CODIGOTRABAJADOR");
+                String nombreEmpleado = empleadosObtenidos.getString("nomEmp");
+                String idEmpleado = empleadosObtenidos.getString("idEmp");
 
                 empleadosNoEspecializados.add(new Empleado(nombreEmpleado,idEmpleado));
             }
@@ -262,7 +262,7 @@ public class GestorBD {
 
     public ArrayList<Ticket> getTicketsSinCategorizar(){
         ArrayList<Ticket> ticketsNoCategorizados = new ArrayList<>();
-        String obtenerTickets = "SELECT TICKET.ID, TICKET.ASUNTO,CLIENTE.NOMBRE,CLIENTE.ID FROM TICKET,CLIENTE " +
+        String obtenerTickets = "SELECT TICKET.ID as ticketId, TICKET.ASUNTO as ticketAsun,CLIENTE.NOMBRE AS nomCli,CLIENTE.ID as idCli FROM TICKET,CLIENTE,GRADOIMPORTANCIA " +
                 "WHERE TICKET.IDCATEGORIA= GRADOIMPORTANCIA.ID AND CATEGORIA = 'Sin_Catalogar' ";
         try{
 
@@ -270,11 +270,11 @@ public class GestorBD {
             ResultSet ticketsObtenidos = extraerTickets.executeQuery();
 
             while(ticketsObtenidos.next()){
-                String asuntoTicket = ticketsObtenidos.getString("TICKET.ASUNTO");
-                Cliente cliente = new Cliente(ticketsObtenidos.getString("CLIENTE.NOMBRE"),Integer.parseInt(ticketsObtenidos.getString("CLIENTE.ID")));
+                String asuntoTicket = ticketsObtenidos.getString("ticketAsun");
+                Cliente cliente = new Cliente(ticketsObtenidos.getString("nomCli"),Integer.parseInt(ticketsObtenidos.getString("idCli")));
 
                 Ticket ticketSinCategorizar = new Ticket(asuntoTicket,cliente);
-                ticketSinCategorizar.setId(Integer.parseInt(ticketsObtenidos.getString("TICKET.ID")));
+                ticketSinCategorizar.setId(Integer.parseInt(ticketsObtenidos.getString("ticketId")));
 
 
 
