@@ -32,9 +32,7 @@ public class ControllerAgregar implements Initializable {
                 case "Empleado":
                     supervisorActual.agregarEmpleado(nombre);
                     break;
-
             }
-
         });
     }
 }

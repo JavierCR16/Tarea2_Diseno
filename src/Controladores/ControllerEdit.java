@@ -28,10 +28,14 @@ public class ControllerEdit implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        guardar.setOnAction(event -> {
-            GradoImportancia gradoImportancia = comboBox.getValue();
-            //TODO Query a la base para actualizar
-        });
+        if (!caso){
+            guardar.setOnAction(event -> {
+                GradoImportancia gradoImportancia = comboBox.getValue();
+                Stage actual = (Stage) guardar.getScene().getWindow();
+                actual.close();
+                //TODO Query a la base para actualizar
+            });
+        }
     }
 
     public void iniciar(){

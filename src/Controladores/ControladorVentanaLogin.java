@@ -133,6 +133,5 @@ public class ControladorVentanaLogin implements Initializable {
                 controladorCliente.clienteLogueado = new Cliente(nombre, id);
                 controladorCliente.clienteLogueado.gestorBD = gestorBase;
         }
-
     }
 }

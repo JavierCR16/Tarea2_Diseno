@@ -164,7 +164,6 @@ public class GestorBD {
                     insertarEmpleado.setInt(1, idSupervisor); //TODO PONER ID SUPERVISOR
                     insertarEmpleado.setString(2, nombre);
                     insertarEmpleado.executeUpdate();
-
                     ResultSet buscarUltimoID = insertarEmpleado.getGeneratedKeys();
                     int ultimoId = 0;
                     if (buscarUltimoID.next()) {

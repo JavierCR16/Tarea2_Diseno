@@ -83,7 +83,7 @@ public class ControllerSupervisor implements Initializable {
 
         //TODO Cargar datos de la base en los listView de clientes, empleados y tickets
         detallesTicket.setOnAction(event -> {
-            //Ticket selected = (Ticket) listTickets.getSelectionModel().getSelectedItem();
+
 
         });
 
@@ -110,7 +110,8 @@ public class ControllerSupervisor implements Initializable {
             abrirDetalles(true, new Cliente("Bryan", 0));
         });
         detallesEmpleado.setOnAction(event -> {
-            abrirDetalles(false, new Empleado("Bryan", "0"));
+            Empleado e = (Empleado) tablaEmpleados.getSelectionModel().getSelectedItem();
+            abrirDetalles(false, e);
         });
     }
 
@@ -156,7 +157,7 @@ public class ControllerSupervisor implements Initializable {
         else{
             Empleado empleado = (Empleado) persona;
             escenario.setTitle("Detalles Empleado");
-            c.idO = String.valueOf(empleado.ID);
+            c.idO = empleado.getID();
             c.nombreO = empleado.getNombre();
             c.caso = caso;
         }
