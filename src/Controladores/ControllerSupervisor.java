@@ -79,7 +79,7 @@ public class ControllerSupervisor implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         configurarColumnas();
-        cargarDatosDefecto();
+
 
         //TODO Cargar datos de la base en los listView de clientes, empleados y tickets
         detallesTicket.setOnAction(event -> {

@@ -238,6 +238,7 @@ public class GestorBD {
 
     public ArrayList<Empleado> getEmpleadosSinEspecializar(){
         ArrayList<Empleado> empleadosNoEspecializados = new ArrayList<>();
+
         String obtenerEmpleados = "SELECT EMPLEADO.CODIGOTRABAJADOR, EMPLEADO.NOMBRE FROM EMPLEADO " +
                 "WHERE EMPLEADO.ESPECIALIZACION = GRADOIMPORTANCIA.ID AND CATEGORIA = 'Sin_Catalogar' ";
 
