@@ -7,8 +7,8 @@ public class Cliente {
     private String nombre;
     public GestorBD gestorBD;
 
-    public Cliente(String nombre, int id, GestorBD gestorBD){
-        this.gestorBD = gestorBD;
+    public Cliente(String nombre, int id){
+
         this.nombre = nombre;
         this.ID = id;//TODO Sacar el ID de la base e insertar al cliente nuevo en la base
     }

@@ -6,6 +6,9 @@ import java.util.Date;
 public class Ticket {
     private Date fecha;
     private int clienteID;
+
+
+
     public GradoImportancia categoria;
     public EstadoTicket estado;
     public String asunto;
@@ -48,5 +51,13 @@ public class Ticket {
         return "SIN_CATALOGAR";
     }
 
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
 }

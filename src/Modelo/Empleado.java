@@ -1,18 +1,22 @@
 package Modelo;
 
+import javafx.beans.property.SimpleStringProperty;
+import sun.java2d.pipe.SpanShapeRenderer;
+
 import java.util.ArrayList;
 
 public class Empleado {
-    public String nombre;
-    public int ID;
+
+    public SimpleStringProperty nombre;
+    public SimpleStringProperty ID;
     public GradoImportancia especializacion;
     public Ticket atendiendo;
     //FIXME DUDA CON JAVI
     public static ArrayList<Empleado> empleados = new ArrayList<>();
 
-    public Empleado(String nombre, int id){
-        this.nombre = nombre;
-        this.ID = id; //TODO Sacar el ID  de la base e insertar al nuevo empleado
+    public Empleado(String nombre, String id){
+        this.nombre = new SimpleStringProperty(nombre);
+        this.ID = new SimpleStringProperty(id); //TODO Sacar el ID  de la base e insertar al nuevo empleado
         empleados.add(this);
     }
 
@@ -37,4 +41,29 @@ public class Empleado {
         String query = "SELECT empleado, COUNT(*)/100 AS porcentaje FROM Tickets GROUP BY empleado ORDER BY porcentaje;";
         //TODO Revisar query y convertir resultado a Observable list
     }
+
+    public String getNombre() {
+        return nombre.get();
+    }
+
+    public SimpleStringProperty nombreProperty() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre.set(nombre);
+    }
+
+    public String getID() {
+        return ID.get();
+    }
+
+    public SimpleStringProperty IDProperty() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID.set(ID);
+    }
+
 }

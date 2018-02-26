@@ -1,12 +1,10 @@
 package Gestores;
 
-import Modelo.Cliente;
-import Modelo.Empleado;
-import Modelo.GradoImportancia;
-import Modelo.Supervisor;
+import Modelo.*;
 import javafx.scene.control.Alert;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * Created by Javier on 2/19/2018.
@@ -236,5 +234,78 @@ public class GestorBD {
             return false;
         }
         return true;
+    }
+
+    public ArrayList<Empleado> getEmpleadosSinEspecializar(){
+        ArrayList<Empleado> empleadosNoEspecializados = new ArrayList<>();
+        String obtenerEmpleados = "SELECT EMPLEADO.CODIGOTRABAJADOR, EMPLEADO.NOMBRE FROM EMPLEADO " +
+                "WHERE EMPLEADO.ESPECIALIZACION = GRADOIMPORTANCIA.ID AND CATEGORIA = 'Sin_Catalogar' ";
+
+        try{
+            PreparedStatement extraerEmpleados = conexion.prepareStatement(obtenerEmpleados);
+            ResultSet empleadosObtenidos = extraerEmpleados.executeQuery();
+
+            while(empleadosObtenidos.next()){
+                String nombreEmpleado = empleadosObtenidos.getString("EMPLEADO.NOMBRE");
+                String idEmpleado = empleadosObtenidos.getString("EMPLEADO.CODIGOTRABAJADOR");
+
+                empleadosNoEspecializados.add(new Empleado(nombreEmpleado,idEmpleado));
+            }
+
+        }catch(SQLException e){
+            e.printStackTrace();
+
+        }
+        return empleadosNoEspecializados;
+    }
+
+    public ArrayList<Ticket> getTicketsSinCategorizar(){
+        ArrayList<Ticket> ticketsNoCategorizados = new ArrayList<>();
+        String obtenerTickets = "SELECT TICKET.ID, TICKET.ASUNTO,CLIENTE.NOMBRE,CLIENTE.ID FROM TICKET,CLIENTE " +
+                "WHERE TICKET.IDCATEGORIA= GRADOIMPORTANCIA.ID AND CATEGORIA = 'Sin_Catalogar' ";
+        try{
+
+            PreparedStatement extraerTickets = conexion.prepareStatement(obtenerTickets);
+            ResultSet ticketsObtenidos = extraerTickets.executeQuery();
+
+            while(ticketsObtenidos.next()){
+                String asuntoTicket = ticketsObtenidos.getString("TICKET.ASUNTO");
+                Cliente cliente = new Cliente(ticketsObtenidos.getString("CLIENTE.NOMBRE"),Integer.parseInt(ticketsObtenidos.getString("CLIENTE.ID")));
+
+                Ticket ticketSinCategorizar = new Ticket(asuntoTicket,cliente);
+                ticketSinCategorizar.setId(Integer.parseInt(ticketsObtenidos.getString("TICKET.ID")));
+
+
+
+                ticketsNoCategorizados.add(ticketSinCategorizar);
+            }
+
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return ticketsNoCategorizados;
+    }
+
+    public ArrayList<Cliente> getClientes(){
+        ArrayList<Cliente> clientes= new ArrayList<>();
+        String obtenerClientes = "SELECT ID,NOMBRE FROM CLIENTE";
+
+        try{
+            PreparedStatement extraerClientes = conexion.prepareStatement(obtenerClientes);
+            ResultSet clientesObtenidos = extraerClientes.executeQuery();
+
+            while(clientesObtenidos.next()){
+                String nombreCliente = clientesObtenidos.getString("NOMBRE");
+                String idCliente = clientesObtenidos.getString("ID");
+
+              clientes.add(new Cliente(nombreCliente,Integer.parseInt(idCliente)));
+            }
+
+        }catch(SQLException e){
+            e.printStackTrace();
+
+        }
+        return clientes;
     }
 }
