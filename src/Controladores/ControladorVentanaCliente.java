@@ -19,6 +19,7 @@ public class ControladorVentanaCliente implements Initializable {
     public TextArea asuntoField;
     @FXML
     public Button guardar;
+
     GestorBD gestorBDCliente;
     Cliente clienteLogueado;
 

@@ -273,7 +273,7 @@ public class GestorBD {
                 Cliente cliente = new Cliente(ticketsObtenidos.getString("nomCli"),ticketsObtenidos.getString("idCli"));
 
                 Ticket ticketSinCategorizar = new Ticket(asuntoTicket,cliente);
-                ticketSinCategorizar.setId(Integer.parseInt(ticketsObtenidos.getString("ticketId")));
+                ticketSinCategorizar.setId(ticketsObtenidos.getString("ticketId"));
 
 
 

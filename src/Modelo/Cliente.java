@@ -14,11 +14,10 @@ public class Cliente {
 
         this.nombre = new SimpleStringProperty(nombre);
         this.ID = new SimpleStringProperty(id);//TODO Sacar el ID de la base e insertar al cliente nuevo en la base
-        System.out.println(this.nombre);
     }
 
     public boolean agregarTicket(String asunto){
-        return gestorBD.agregarTicket(asunto, Integer.valueOf(this.getNombre()));
+        return gestorBD.agregarTicket(asunto, Integer.valueOf(this.getID()));
     }
 
     public String getNombre() {

@@ -6,6 +6,8 @@ import Modelo.Cliente;
 import Modelo.Empleado;
 import Modelo.Supervisor;
 import Modelo.Ticket;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -16,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
@@ -169,13 +172,17 @@ public class ControllerSupervisor implements Initializable {
 
     public void cargarDatosDefecto(){
         ArrayList<Empleado> empleadosSinEspecializar = gestorBDSupervisor.getEmpleadosSinEspecializar();
-        //ArrayList<Ticket> ticketsSinCategorizar = gestorBDSupervisor.getTicketsSinCategorizar();
+        ArrayList<Ticket> ticketsSinCategorizar = gestorBDSupervisor.getTicketsSinCategorizar();
         ArrayList<Cliente> clientes = gestorBDSupervisor.getClientes();
+
         ObservableList<Empleado> listaEmpleados = FXCollections.observableArrayList(empleadosSinEspecializar);
         ObservableList<Cliente> listaCliente = FXCollections.observableArrayList(clientes);
-        //ObservableList<Empleado> listaEmpleados = FXCollections.observableArrayList(empleadosSinEspecializar);
+        ObservableList<Ticket> listaTickets = FXCollections.observableArrayList(ticketsSinCategorizar);
+
         tablaEmpleados.setItems(listaEmpleados);
         listClientes.setItems(listaCliente);
+        listTickets.setItems(listaTickets);
+
     }
 
     public void actualizarInformacion(int opcion){
@@ -210,5 +217,13 @@ public class ControllerSupervisor implements Initializable {
         columnaNombreEmpleado.setCellValueFactory(new PropertyValueFactory<Empleado,String>("nombre"));
         columnaIdCliente.setCellValueFactory(new PropertyValueFactory<Cliente,String>("ID"));
         columnaNombreCliente.setCellValueFactory(new PropertyValueFactory<Cliente,String>("nombre"));
+        columnaIdTicket.setCellValueFactory(new PropertyValueFactory<Ticket,String>("id"));
+        columnaNombreClienteTicket.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Ticket, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Ticket, String> t) {
+                return new SimpleStringProperty(t.getValue().getCliente().getNombre());
+            }
+        });
+        columnaAsunto.setCellValueFactory(new PropertyValueFactory<Ticket,String>("asunto"));
     }
 }

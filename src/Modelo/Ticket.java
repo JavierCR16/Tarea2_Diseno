@@ -1,29 +1,28 @@
 package Modelo;
 
+import javafx.beans.property.SimpleStringProperty;
+
 import java.util.ArrayList;
 import java.util.Date;
 
 public class Ticket {
     private Date fecha;
-    private int clienteID;
-
-
 
     public GradoImportancia categoria;
     public EstadoTicket estado;
-    public String asunto;
-    public int id;
+    public SimpleStringProperty asunto;
+    public SimpleStringProperty id;
     private Cliente cliente;
     private Empleado empleado;
     public static ArrayList<Ticket> tickets = new ArrayList<>();
 
     public Ticket(String asunto, Cliente cliente){
-        this.cliente = cliente;
-        this.id = 0; //TODO Sacar el ID de la base de datos e insertar el nuevo ticket a la base
+        this.id = new SimpleStringProperty();
+        this.cliente = cliente;//TODO Sacar el ID de la base de datos e insertar el nuevo ticket a la base
         this.categoria = GradoImportancia.SIN_CATALOGAR;
         this.estado = EstadoTicket.ATENDIDO.SIN_ATENDER;
         this.fecha = new Date();
-        this.asunto = asunto;
+        this.asunto = new SimpleStringProperty(asunto);
         tickets.add(this);
     }
 
@@ -50,13 +49,68 @@ public class Ticket {
         return "SIN_CATALOGAR";
     }
 
+    public Date getFecha() {
+        return fecha;
+    }
 
-    public int getId() {
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public GradoImportancia getCategoria() {
+        return categoria;
+    }
+
+    public EstadoTicket getEstado() {
+        return estado;
+    }
+
+    public String getAsunto() {
+        return asunto.get();
+    }
+
+    public SimpleStringProperty asuntoProperty() {
+        return asunto;
+    }
+
+    public void setAsunto(String asunto) {
+        this.asunto.set(asunto);
+    }
+
+    public String getId() {
+        return id.get();
+    }
+
+
+    public SimpleStringProperty idProperty() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+
+
+    public void setId(String id) {
+        this.id.set(id);
     }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Empleado getEmpleado() {
+        return empleado;
+    }
+
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
+    }
+
+
+
+
+
 
 }

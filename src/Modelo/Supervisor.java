@@ -18,6 +18,7 @@ public class Supervisor {
         this.ID = ID;
     }
 
+    /*
     public void catalogarTicket(int idTicket, GradoImportancia grado) {
         for (Ticket ticket : Ticket.tickets) {
             if (ticket.id == idTicket) {
@@ -27,7 +28,7 @@ public class Supervisor {
             }
         }
     }
-/*
+
     public void especializarEmpleado(int idEmpleado, GradoImportancia especializacion) {
         for (Empleado empleado : Empleado.empleados) {
             if (empleado.ID == idEmpleado) {
