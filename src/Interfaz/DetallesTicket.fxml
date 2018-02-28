@@ -9,18 +9,18 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="193.0" prefWidth="606.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.ControllerDetallesTicket">
+<AnchorPane prefHeight="215.0" prefWidth="330.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.ControllerDetallesTicket">
    <children>
       <Label layoutX="15.0" layoutY="25.0" text="Nombre Cliente" />
       <Label layoutX="15.0" layoutY="55.0" text="Fecha" />
       <Label layoutX="15.0" layoutY="80.0" text="Categoría" />
       <Label layoutX="15.0" layoutY="105.0" text="Estado" />
       <Label layoutX="15.0" layoutY="130.0" text="Asunto" />
-      <Label fx:id="nombreCliente" layoutX="160.0" layoutY="25.0" prefHeight="21.0" prefWidth="421.0" text="Label" />
-      <Button fx:id="save" layoutX="507.0" layoutY="151.0" mnemonicParsing="false" text="Guardar" />
-      <Label fx:id="fecha" layoutX="160.0" layoutY="55.0" prefHeight="21.0" prefWidth="421.0" text="Label" />
-      <Label fx:id="estado" layoutX="160.0" layoutY="105.0" prefHeight="21.0" prefWidth="421.0" text="Label" />
-      <Label fx:id="asunto" layoutX="160.0" layoutY="130.0" prefHeight="21.0" prefWidth="421.0" text="Label" />
+      <Label fx:id="nombreCliente" layoutX="160.0" layoutY="25.0" prefHeight="21.0" prefWidth="150.0" text="Label" />
+      <Button fx:id="save" layoutX="10.0" layoutY="167.0" mnemonicParsing="false" text="Guardar" />
+      <Label fx:id="fecha" layoutX="160.0" layoutY="55.0" prefHeight="21.0" prefWidth="150.0" text="Label" />
+      <Label fx:id="estado" layoutX="160.0" layoutY="105.0" prefHeight="21.0" prefWidth="150.0" text="Label" />
+      <Label fx:id="asunto" layoutX="160.0" layoutY="130.0" prefHeight="21.0" prefWidth="150.0" text="Label" />
       <ComboBox fx:id="comboBox" layoutX="153.0" layoutY="75.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

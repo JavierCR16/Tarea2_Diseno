@@ -82,18 +82,26 @@ public class ControllerSupervisor implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         configurarColumnas();
-
-
-        //TODO Cargar datos de la base en los listView de clientes, empleados y tickets
         detallesTicket.setOnAction(event -> {
+            Ticket actual = (Ticket) listTickets.getSelectionModel().getSelectedItem();
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                Parent root = loader.load(getClass().getResource("../Interfaz/DetallesTicket.fxml").openStream());
+                ControllerDetallesTicket controller = loader.getController();
+                controller.ticket = actual;
+                controller.supervisor = this.supervisorLogueado;
+                controller.iniciar();
+                Stage escenario = new Stage();
+                escenario.setTitle("Detalles Ticket");
+                escenario.setScene(new Scene(root, 330, 215));
+                escenario.show();
 
-
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
-
         actualizarEmpleados.setOnAction(event->{
-
             actualizarInformacion(1);
-
         });
         actualizarTickets.setOnAction(event->{
             actualizarInformacion(2);
@@ -102,7 +110,6 @@ public class ControllerSupervisor implements Initializable {
 
             actualizarInformacion(3);
         });
-
         agregarCliente.setOnAction(event -> {
             abrirAgregar("Cliente");
         });
@@ -168,7 +175,6 @@ public class ControllerSupervisor implements Initializable {
         escenario.setScene(new Scene(root, 300, 215));
         escenario.show();
     }
-
 
     public void cargarDatosDefecto(){
         ArrayList<Empleado> empleadosSinEspecializar = gestorBDSupervisor.getEmpleadosSinEspecializar();

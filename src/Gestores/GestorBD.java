@@ -36,7 +36,6 @@ public class GestorBD {
 
     public Connection getConexion() {
         return conexion;
-
     }
 
     public Statement getEstado() {
@@ -323,6 +322,17 @@ public class GestorBD {
         }
     }
 
-
-
+    public void actualizarTicket(int id, String categoria){
+        int cat = encontrarIDEspecializacion(categoria);
+        String sqlTicket = "UPDATE TICKET SET IDCATEGORIA = ? WHERE ID = ?;";
+        try {
+            PreparedStatement updateTicket = conexion.prepareStatement(sqlTicket, Statement.RETURN_GENERATED_KEYS);
+            updateTicket.setInt(1, cat);
+            updateTicket.setInt(2, id);
+            updateTicket.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            invocarAlerta("Error al actualizar Ticket");
+        }
+    }
 }

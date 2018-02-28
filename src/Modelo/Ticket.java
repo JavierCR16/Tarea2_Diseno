@@ -6,13 +6,12 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Ticket {
-    private Date fecha;
-
+    public Date fecha;
     public GradoImportancia categoria;
     public EstadoTicket estado;
     public SimpleStringProperty asunto;
     public SimpleStringProperty id;
-    private Cliente cliente;
+    public Cliente cliente;
     private Empleado empleado;
     public static ArrayList<Ticket> tickets = new ArrayList<>();
 
