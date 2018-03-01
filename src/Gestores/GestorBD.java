@@ -261,7 +261,7 @@ public class GestorBD {
     public ArrayList<Ticket> getTicketsSinCategorizar(){
         ArrayList<Ticket> ticketsNoCategorizados = new ArrayList<>();
         String obtenerTickets = "SELECT TICKET.ID as ticketId, TICKET.ASUNTO as ticketAsun,CLIENTE.NOMBRE AS nomCli,CLIENTE.ID as idCli FROM TICKET,CLIENTE,GRADOIMPORTANCIA " +
-                "WHERE TICKET.IDCATEGORIA= GRADOIMPORTANCIA.ID AND CATEGORIA = 'Sin_Catalogar' ";
+                "WHERE TICKET.IDCATEGORIA= GRADOIMPORTANCIA.ID AND TICKET.IDCLIENTE = CLIENTE.ID AND CATEGORIA = 'Sin_Catalogar' ";
         try{
 
             PreparedStatement extraerTickets = conexion.prepareStatement(obtenerTickets);
