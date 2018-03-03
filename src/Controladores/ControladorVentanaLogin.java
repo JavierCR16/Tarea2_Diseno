@@ -62,7 +62,7 @@ public class ControladorVentanaLogin implements Initializable {
         ingresarEmpleado.setOnAction(event -> {
             String nombreEmp = nombreEmpleado.getText();
             int idEmp = Integer.valueOf(idEmpleado.getText());
-            loguearEntidad(nombreEmp,idEmp,"Empleado",1200,600);
+            loguearEntidad(nombreEmp,idEmp,"Empleado",288,400);
         });
 
 
@@ -101,7 +101,7 @@ public class ControladorVentanaLogin implements Initializable {
             buscarControladorYSetGestor(entidad, loader, nombre, id); //Busca el controlador dependiendo de la entidad para setearle el gestor de base correspondiente
             Stage escenario = new Stage();
             escenario.setTitle(entidad);
-            escenario.setScene(new Scene(root, width, height)); //TODO Cambiarlo(Cambiar los valores de width y height) en cada funcion dependiendo de la ventana.
+            escenario.setScene(new Scene(root, width, height));
             escenario.show();
             Stage actual = (Stage) ingresarEmpleado.getScene().getWindow();
             actual.close();
@@ -127,6 +127,8 @@ public class ControladorVentanaLogin implements Initializable {
                 ControladorVentanaEmpleado controladorEmpleado = loader.getController();
                 controladorEmpleado.gestorBDEmpleado = gestorBase;
                 controladorEmpleado.empleadoLogueado = new Empleado(nombre,String.valueOf(id));
+                controladorEmpleado.empleadoLogueado.gestor = gestorBase;
+                controladorEmpleado.iniciar();
                 break;
             case "Cliente":
                 ControladorVentanaCliente controladorCliente = loader.getController();

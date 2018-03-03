@@ -1,5 +1,6 @@
 package Modelo;
 
+import Gestores.GestorBD;
 import javafx.beans.property.SimpleStringProperty;
 
 
@@ -10,31 +11,31 @@ public class Empleado {
     public SimpleStringProperty nombre;
     public SimpleStringProperty ID;
     public GradoImportancia especializacion;
-    public Ticket atendiendo;
-    //FIXME DUDA CON JAVI
+    public Ticket atendiendo = null;
     public static ArrayList<Empleado> empleados = new ArrayList<>();
+    public GestorBD gestor;
 
     public Empleado(String nombre, String id){
         this.nombre = new SimpleStringProperty(nombre);
-        this.ID = new SimpleStringProperty(id); //TODO Sacar el ID  de la base e insertar al nuevo empleado
+        this.ID = new SimpleStringProperty(id);
         empleados.add(this);
     }
 
-    public void solicitarTicket(){
-        String query = "SELECT * FROM Ticket WHERE categoria = " + especializacion.toString() + "LIMIT 1;"; //TODO Hacer bien el query y vandarlo a la base
-        atendiendo = new Ticket("", null); //TODO transformar el resultado del query en Ticket para asignarselo al empleado
-        atendiendo.setEstado(EstadoTicket.ATENDIDO.ATENDIENDO);
-        //TODO actualizar la base para cambier el estado del Ticket
+    public int solicitarTicket(){
+        Ticket t = gestor.solicitarTicket(Integer.valueOf(this.getID()));
+        if (t == null){
+            System.out.println("Ticket Nulo");
+            return 1;
+        }
+        else{
+            this.atendiendo = t;
+        }
+        return 0;
     }
 
     public void atenderTicket(){
-        atendiendo.setEstado(EstadoTicket.ATENDIDO);
-        //TODO Actualizar la base para poner el nuevo ticket como atendido
-        atendiendo = null;
-    }
-
-    public void setEspecializacion(GradoImportancia especializacion) {
-        this.especializacion = especializacion;
+       gestor.atenderTicket(Integer.valueOf(atendiendo.getId()), EstadoTicket.ATENDIDO);
+       this.atendiendo = null;
     }
 
     public void getPorcentAtencionXEmpleado() {

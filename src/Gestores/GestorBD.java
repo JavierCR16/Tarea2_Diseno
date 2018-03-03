@@ -335,4 +335,87 @@ public class GestorBD {
             invocarAlerta("Error al actualizar Ticket");
         }
     }
+
+    public void atenderTicket(int id, EstadoTicket estadoTicket){
+        String sqlTicket = "UPDATE TICKET SET IDESTADO = ? WHERE ID = ?;";
+        try {
+            int e = encontrarIDEstado(estadoTicket);
+            PreparedStatement updateTicket = conexion.prepareStatement(sqlTicket, Statement.RETURN_GENERATED_KEYS);
+            updateTicket.setInt(1, e);
+            updateTicket.setInt(2, id);
+            updateTicket.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            invocarAlerta("Error al actualizar Ticket");
+        }
+    }
+
+    public Ticket solicitarTicket(int idEmpleado){
+        String sqlTicket = "SELECT T.ASUNTO, T.ID, E.CODIGOTRABAJADOR " +
+                "FROM TICKET T INNER JOIN EMPLEADO E ON E.ESPECIALIZACION = T.IDCATEGORIA " +
+                "WHERE E.CODIGOTRABAJADOR = ? AND T.IDESTADO = 1 AND T.IDEMPLEADO IS NULL;";
+        try{
+            PreparedStatement encontrarEspecializacion = conexion.prepareStatement(sqlTicket);
+            encontrarEspecializacion.setInt(1, idEmpleado);
+            ResultSet ticket = encontrarEspecializacion.executeQuery();
+            if(!ticket.next())
+                return null;
+            String asunto = ticket.getString("ASUNTO");
+            String id = ticket.getString("ID");
+            asignarDatosTicket(idEmpleado, Integer.valueOf(id), EstadoTicket.ATENDIENDO);
+            return new Ticket(asunto, id);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void asignarDatosTicket(int idEmpleado, int idTicket, EstadoTicket e){
+        int estado = encontrarIDEstado(e);
+        String sqlUpdate = "UPDATE TICKET SET IDEMPLEADO = ?, IDESTADO = ? WHERE ID = ?;";
+        try {
+            PreparedStatement update = conexion.prepareStatement(sqlUpdate, Statement.RETURN_GENERATED_KEYS);
+            update.setInt(1, idEmpleado);
+            update.setInt(2, estado);
+            update.setInt(3, idTicket);
+            update.executeUpdate();
+        } catch (SQLException sqlError) {
+            sqlError.printStackTrace();
+            invocarAlerta("Error al actualizar ticket");
+        }
+    }
+
+    public int encontrarIDEstado(EstadoTicket especializacion){
+        int idEncontrado = 0;
+        String sqlEspecializacion = "SELECT ID FROM ESTADOTICKET WHERE ESTADO = ?";
+        try{
+            PreparedStatement encontrarEspecializacion = conexion.prepareStatement(sqlEspecializacion);
+            encontrarEspecializacion.setString(1,especializacion.toString());
+            ResultSet especializacionEncontrado = encontrarEspecializacion.executeQuery();
+            while(especializacionEncontrado.next()){
+                idEncontrado = Integer.valueOf(especializacionEncontrado.getString("ID"));
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return idEncontrado;
+    }
+
+    public Ticket getTicketAtendiendo(int idEmpleado){
+        String consultaString = "SELECT * FROM TICKET WHERE IDEMPLEADO = ? AND IDESTADO = 2;";
+        try {
+            PreparedStatement consulta = conexion.prepareStatement(consultaString, Statement.RETURN_GENERATED_KEYS);
+            consulta.setInt(1, idEmpleado);
+            ResultSet rs = consulta.executeQuery();
+            if(rs.next()){
+                String asunto = rs.getString("ASUNTO");
+                String id = rs.getString("ID");
+                return new Ticket(asunto, id);
+            }
+        } catch (SQLException sqlError) {
+            sqlError.printStackTrace();
+            invocarAlerta("Error al obtener datos");
+        }
+        return null;
+    }
 }

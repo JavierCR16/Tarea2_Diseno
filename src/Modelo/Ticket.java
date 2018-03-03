@@ -25,6 +25,11 @@ public class Ticket {
         tickets.add(this);
     }
 
+    public Ticket(String asunto, String id){
+        this.id = new SimpleStringProperty(id);
+        this.asunto = new SimpleStringProperty(asunto);
+    }
+
     public void setCategoria(GradoImportancia categoria) {
         this.categoria = categoria;
     }
