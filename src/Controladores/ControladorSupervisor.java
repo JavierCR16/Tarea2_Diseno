@@ -43,7 +43,13 @@ public class ControladorSupervisor implements Initializable {
     @FXML
     public Label masRecibidos;
     @FXML
-    public ListView perctPorEmpleado;
+    public TableView perctPorEmpleado;
+    @FXML
+    public TableColumn columnaCategoriaPorcentaje;
+    @FXML
+    public TableColumn columnaNombrePorcentaje;
+    @FXML
+    public TableColumn columnaPorcentaje;
     @FXML
     public TableColumn columnaAmarillo;
     @FXML
@@ -248,18 +254,22 @@ public class ControladorSupervisor implements Initializable {
         columnaAmarillo.setCellValueFactory(new PropertyValueFactory<TablaTickets, String>("cantidadAmarillo"));
         columnaRojo.setCellValueFactory(new PropertyValueFactory<TablaTickets, String>("cantidadRojo"));
         columnaVerde.setCellValueFactory(new PropertyValueFactory<TablaTickets, String>("cantidadVerde"));
+        columnaCategoriaPorcentaje.setCellValueFactory(new PropertyValueFactory<TablaPorcentajeAtencion, String>("categoria"));
+        columnaNombrePorcentaje.setCellValueFactory(new PropertyValueFactory<TablaTickets, String>("nombreEmpleado"));
+        columnaPorcentaje.setCellValueFactory(new PropertyValueFactory<TablaTickets, String>("porcentajeAtencion"));
     }
 
     public void mostrarEstadisticas() {
         ticketXcateg.getItems().clear();
-        masRecibidos.setText(Ticket.getCategoriaMasRecibida(gestorBDSupervisor));
+        masRecibidos.setText(Ticket.getCategoriaMasRecibida(gestorBDSupervisor)); //Set el ticket mas recibido
 
         TablaTickets cantTicketsXFecha = Ticket.getDistribTicketsXFecha(fechaIni.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
                 fechaFin.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), gestorBDSupervisor);
 
-        TablaTickets[] informacionCantidades = {cantTicketsXFecha};
+        TablaTickets[] informacionCantidades = {cantTicketsXFecha}; //Set la cantidad de tickets por fechas seleccionadas
 
-        ticketXcateg.setItems(FXCollections.observableArrayList(Arrays.asList(informacionCantidades)));
+        ArrayList<TablaPorcentajeAtencion> porcentajesEmpleados = Empleado.getPorcentAtencionXEmpleado(gestorBDSupervisor);
+        perctPorEmpleado.setItems(FXCollections.observableArrayList(porcentajesEmpleados));
     }
 
 }

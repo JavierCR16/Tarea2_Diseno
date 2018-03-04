@@ -4,6 +4,8 @@ import Gestores.GestorBD;
 import javafx.beans.property.SimpleStringProperty;
 
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Empleado {
@@ -38,9 +40,8 @@ public class Empleado {
        this.atendiendo = null;
     }
 
-    public static void getPorcentAtencionXEmpleado() {
-        String query = "SELECT empleado, COUNT(*)/100 AS porcentaje FROM Tickets GROUP BY empleado ORDER BY porcentaje;";
-        //TODO Javi lo tiene
+    public static ArrayList<TablaPorcentajeAtencion> getPorcentAtencionXEmpleado(GestorBD gestorBase) {
+        return gestorBase.getPorcentAtencionXEmpleado();
     }
 
     public String getNombre() {

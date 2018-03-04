@@ -471,4 +471,28 @@ public class GestorBD {
         }
         return null;
     }
+
+    public ArrayList<TablaPorcentajeAtencion> getPorcentAtencionXEmpleado() {
+        String queryPorcentaje = "SELECT CATEGORIA,EMPLEADO.NOMBRE, (count(*) *1.0)/(select count(*) FROM TICKET)*100 as porcentajeAtencion FROM TICKET,EMPLEADO,GRADOIMPORTANCIA,ESTADOTICKET " +
+                " WHERE TICKET.IDCATEGORIA = GRADOIMPORTANCIA.ID AND TICKET.IDESTADO = ESTADOTICKET.ID AND TICKET.IDEMPLEADO = EMPLEADO.CODIGOTRABAJADOR " +
+                " AND CATEGORIA != 'Sin_Catalogar' AND ESTADO != 'Sin_Atender' group by EMPLEADO.NOMBRE, CATEGORIA";
+        ArrayList<TablaPorcentajeAtencion> porcentajes = new ArrayList<>();
+        try{
+            PreparedStatement obtenerPorcentajes = conexion.prepareStatement(queryPorcentaje);
+            ResultSet porcentajesObtenidos = obtenerPorcentajes.executeQuery();
+
+
+            while(porcentajesObtenidos.next()){
+                String categoria = porcentajesObtenidos.getString("categoria");
+                String nombreEmp = porcentajesObtenidos.getString("nombre");
+                String porcentajeAdmision = porcentajesObtenidos.getString("porcentajeAtencion")+" %";
+
+                porcentajes.add(new TablaPorcentajeAtencion(categoria,nombreEmp,porcentajeAdmision));
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return porcentajes;
+    }
+
 }
