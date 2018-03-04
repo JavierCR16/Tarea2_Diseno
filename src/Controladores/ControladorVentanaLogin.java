@@ -55,48 +55,46 @@ public class ControladorVentanaLogin implements Initializable {
             String nombreSuper = nombreSupervisor.getText();
             int idSuper = Integer.valueOf(idSupervisor.getText());
 
-            loguearEntidad(nombreSuper,idSuper,"Supervisor",600,400);
+            loguearEntidad(nombreSuper, idSuper, "Supervisor", 600, 400);
 
         });
 
         ingresarEmpleado.setOnAction(event -> {
             String nombreEmp = nombreEmpleado.getText();
             int idEmp = Integer.valueOf(idEmpleado.getText());
-            loguearEntidad(nombreEmp,idEmp,"Empleado",288,400);
+            loguearEntidad(nombreEmp, idEmp, "Empleado", 288, 400);
         });
-
 
 
         ingresarCliente.setOnAction(event -> {
             String nombreCli = nombreCliente.getText();
             int idCli = Integer.valueOf(idCliente.getText());
-            loguearEntidad(nombreCli,idCli,"Cliente",606,414);
+            loguearEntidad(nombreCli, idCli, "Cliente", 606, 414);
         });
 
 
     }
 
-    public void loguearEntidad(String nombre, int id , String nombreTabla, int width, int height) {
+    public void loguearEntidad(String nombre, int id, String nombreTabla, int width, int height) {
 
 
-        if (gestorBase.existeConexionUsuarios(nombre, String.valueOf(id)) && gestorBase.existeEntidad(nombre, id,nombreTabla.toUpperCase())) {
+        if (gestorBase.existeConexionUsuarios(nombre, String.valueOf(id)) && gestorBase.existeEntidad(nombre, id, nombreTabla.toUpperCase())) {
 
-            gestorBase.establecerConexionUsuario(nombre,String.valueOf(id));
+            gestorBase.establecerConexionUsuario(nombre, String.valueOf(id));
 
-            abrirVentanaEntidad(nombreTabla,width,height, nombre, id);
-        }
-        else{
-            gestorBase.invocarAlerta("No existe un usuario asociado a: "+nombre);
+            abrirVentanaEntidad(nombreTabla, width, height, nombre, id);
+        } else {
+            gestorBase.invocarAlerta("No existe un usuario asociado a: " + nombre);
         }
 
 
     }
 
-    public void abrirVentanaEntidad(String entidad , int width, int height, String nombre, int id) {
+    public void abrirVentanaEntidad(String entidad, int width, int height, String nombre, int id) {
 
         try {
             FXMLLoader loader = new FXMLLoader();
-            Parent root = loader.load(getClass().getResource("../Interfaz/"+entidad+".fxml").openStream());
+            Parent root = loader.load(getClass().getResource("../Interfaz/" + entidad + ".fxml").openStream());
 
             buscarControladorYSetGestor(entidad, loader, nombre, id); //Busca el controlador dependiendo de la entidad para setearle el gestor de base correspondiente
             Stage escenario = new Stage();
@@ -112,21 +110,21 @@ public class ControladorVentanaLogin implements Initializable {
 
     }
 
-    public void buscarControladorYSetGestor(String entidad, FXMLLoader loader,String nombre, int id){
+    public void buscarControladorYSetGestor(String entidad, FXMLLoader loader, String nombre, int id) {
 
-        switch(entidad){
+        switch (entidad) {
 
             case "Supervisor":
-                ControllerSupervisor controladorSupervisor = loader.getController();
+                ControladorSupervisor controladorSupervisor = loader.getController();
                 controladorSupervisor.gestorBDSupervisor = gestorBase;
-                controladorSupervisor.supervisorLogueado = new Supervisor(nombre,id);
+                controladorSupervisor.supervisorLogueado = new Supervisor(nombre, id);
                 controladorSupervisor.supervisorLogueado.gestorSupervisor = gestorBase;
                 controladorSupervisor.cargarDatosDefecto();
                 break;
             case "Empleado":
                 ControladorVentanaEmpleado controladorEmpleado = loader.getController();
                 controladorEmpleado.gestorBDEmpleado = gestorBase;
-                controladorEmpleado.empleadoLogueado = new Empleado(nombre,String.valueOf(id));
+                controladorEmpleado.empleadoLogueado = new Empleado(nombre, String.valueOf(id));
                 controladorEmpleado.empleadoLogueado.gestor = gestorBase;
                 controladorEmpleado.iniciar();
                 break;

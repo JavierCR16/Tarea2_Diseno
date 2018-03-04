@@ -7,14 +7,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ControllerDetallesTicket implements Initializable {
+public class ControladorDetallesTicket implements Initializable {
 
     @FXML
     public Label nombreCliente;
@@ -43,7 +42,7 @@ public class ControllerDetallesTicket implements Initializable {
         });
     }
 
-    public void iniciar(){
+    public void iniciar() {
         fecha.setText(ticket.fecha.toString());
         nombreCliente.setText(ticket.cliente.getNombre());
         estado.setText(ticket.estado.toString());
