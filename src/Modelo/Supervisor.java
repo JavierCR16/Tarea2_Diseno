@@ -2,17 +2,25 @@ package Modelo;
 
 import Gestores.GestorBD;
 
+import java.util.ArrayList;
+
 public class Supervisor {
 
     private int ID;
 
     private String nombre;
 
+    ArrayList<Empleado> empleadosSinEspecializar;
+
+    ArrayList<Ticket> ticketsSinCategorizar;
+
     public GestorBD gestorSupervisor;
 
     public Supervisor(String nombre, int ID) {
         this.nombre = nombre;
         this.ID = ID;
+        empleadosSinEspecializar = new ArrayList();
+        ticketsSinCategorizar = new ArrayList<>();
     }
 
     public void catalogarTicket(int idTicket, String grado) {
@@ -43,4 +51,21 @@ public class Supervisor {
         this.gestorSupervisor = gestorSupervisor;
     }
 
+    public ArrayList<Empleado> getEmpleadosSinEspecializar() {
+        setEmpleadosSinEspecializar();
+        return empleadosSinEspecializar;
+    }
+
+    public void setEmpleadosSinEspecializar() {
+        this.empleadosSinEspecializar = gestorSupervisor.getEmpleadosSinEspecializar();
+    }
+
+    public ArrayList<Ticket> getTicketsSinCategorizar() {
+        setTicketsSinCategorizar();
+        return ticketsSinCategorizar;
+    }
+
+    public void setTicketsSinCategorizar() {
+        this.ticketsSinCategorizar = gestorSupervisor.getTicketsSinCategorizar();
+    }
 }
