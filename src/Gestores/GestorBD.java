@@ -495,4 +495,27 @@ public class GestorBD {
         return porcentajes;
     }
 
+    public ArrayList<Ticket> getTicketsXempleado(boolean caso){
+        ArrayList<Ticket> atendidos= new ArrayList<>();
+        int idEstado = 0;
+        if (caso) //Caso para encontrar atendidos
+            idEstado = encontrarIDEstado(EstadoTicket.ATENDIDO);
+        else//caso para encontrar en atencion
+            idEstado = encontrarIDEstado(EstadoTicket.ATENDIENDO);
+        String obtenerClientes = "SELECT T.ID, IDEMPLEADO, G.CATEGORIA FROM TICKET T INNER JOIN GRADOIMPORTANCIA G ON IDESTADO = G.ID WHERE IDESTADO = ?;";
+        try{
+            PreparedStatement extraerTickets = conexion.prepareStatement(obtenerClientes);
+            extraerTickets.setInt(1, idEstado);
+            ResultSet clientesObtenidos = extraerTickets.executeQuery();
+            while(clientesObtenidos.next()){
+                String idTicket = clientesObtenidos.getString("ID");
+                String idEmpleado = clientesObtenidos.getString("IDEMPLEADO");
+                String categoria = clientesObtenidos.getString("CATEGORIA");
+                atendidos.add(new Ticket(idTicket, idEmpleado, categoria));
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return atendidos;
+    }
 }

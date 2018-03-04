@@ -71,6 +71,10 @@ public class ControladorSupervisor implements Initializable {
     @FXML
     public TableView listClientes;
     @FXML
+    public TableView enAtencionList;
+    @FXML
+    public TableView atendidosList;
+    @FXML
     public TableColumn columnaIdEmpleado;
     @FXML
     public TableColumn columnaNombreEmpleado;
@@ -84,6 +88,18 @@ public class ControladorSupervisor implements Initializable {
     public TableColumn columnaIdCliente;
     @FXML
     public TableColumn columnaNombreCliente;
+    @FXML
+    public TableColumn idTicket1;
+    @FXML
+    public TableColumn idTicket2;
+    @FXML
+    public TableColumn idEmpleado1;
+    @FXML
+    public TableColumn idEmpleado2;
+    @FXML
+    public TableColumn categoria1;
+    @FXML
+    public TableColumn categoria2;
 
     public GestorBD gestorBDSupervisor;
 
@@ -93,13 +109,9 @@ public class ControladorSupervisor implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         configurarColumnas();
-
         actualizarEstadisticas.setOnAction(event -> {
-
             mostrarEstadisticas();
-
         });
-
         detallesTicket.setOnAction(event -> {
             Ticket actual = (Ticket) listTickets.getSelectionModel().getSelectedItem();
             try {
@@ -118,7 +130,6 @@ public class ControladorSupervisor implements Initializable {
                 e.printStackTrace();
             }
         });
-
         actualizarEmpleados.setOnAction(event -> {
             actualizarInformacion(1);
         });
@@ -126,7 +137,6 @@ public class ControladorSupervisor implements Initializable {
             actualizarInformacion(2);
         });
         actualizarClientes.setOnAction(event -> {
-
             actualizarInformacion(3);
         });
         agregarCliente.setOnAction(event -> {
@@ -200,14 +210,20 @@ public class ControladorSupervisor implements Initializable {
         ArrayList<Empleado> empleadosSinEspecializar = supervisorLogueado.getEmpleadosSinEspecializar();
         ArrayList<Ticket> ticketsSinCategorizar = supervisorLogueado.getTicketsSinCategorizar();
         ArrayList<Cliente> clientes = gestorBDSupervisor.getClientes();
+        ArrayList<Ticket> ticketsAtendidos = gestorBDSupervisor.getTicketsXempleado(true);
+        ArrayList<Ticket> ticketsEnAtencion = gestorBDSupervisor.getTicketsXempleado(false);
 
         ObservableList<Empleado> listaEmpleados = FXCollections.observableArrayList(empleadosSinEspecializar);
         ObservableList<Cliente> listaCliente = FXCollections.observableArrayList(clientes);
         ObservableList<Ticket> listaTickets = FXCollections.observableArrayList(ticketsSinCategorizar);
+        ObservableList<Ticket> atendidos = FXCollections.observableArrayList(ticketsAtendidos);
+        ObservableList<Ticket> enAtencion = FXCollections.observableArrayList(ticketsEnAtencion);
 
         tablaEmpleados.setItems(listaEmpleados);
         listClientes.setItems(listaCliente);
         listTickets.setItems(listaTickets);
+        atendidosList.setItems(atendidos);
+        enAtencionList.setItems(enAtencion);
 
     }
 
@@ -239,17 +255,21 @@ public class ControladorSupervisor implements Initializable {
     }
 
     public void configurarColumnas() {
+        //Agregado para tab de tickets
+        idEmpleado2.setCellValueFactory(new PropertyValueFactory<Ticket, String>("idEmpleado"));
+        idEmpleado2.setCellValueFactory(new PropertyValueFactory<Ticket, String>("idEmpleado"));
+        idTicket1.setCellValueFactory(new PropertyValueFactory<Ticket, String>("id"));
+        idTicket2.setCellValueFactory(new PropertyValueFactory<Ticket, String>("id"));
+        categoria1.setCellValueFactory(new PropertyValueFactory<Ticket, String>("categoriaAux"));
+        categoria2.setCellValueFactory(new PropertyValueFactory<Ticket, String>("categoriaAux"));
+        //
         columnaIdEmpleado.setCellValueFactory(new PropertyValueFactory<Empleado, String>("ID"));
         columnaNombreEmpleado.setCellValueFactory(new PropertyValueFactory<Empleado, String>("nombre"));
         columnaIdCliente.setCellValueFactory(new PropertyValueFactory<Cliente, String>("ID"));
         columnaNombreCliente.setCellValueFactory(new PropertyValueFactory<Cliente, String>("nombre"));
         columnaIdTicket.setCellValueFactory(new PropertyValueFactory<Ticket, String>("id"));
-        columnaNombreClienteTicket.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Ticket, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Ticket, String> t) {
-                return new SimpleStringProperty(t.getValue().getCliente().getNombre());
-            }
-        });
+        columnaNombreClienteTicket.setCellValueFactory((Callback<TableColumn.CellDataFeatures<Ticket, String>, ObservableValue<String>>) t ->
+                new SimpleStringProperty(t.getValue().getCliente().getNombre()));
         columnaAsunto.setCellValueFactory(new PropertyValueFactory<String, String>("asunto"));
         columnaAmarillo.setCellValueFactory(new PropertyValueFactory<TablaTickets, String>("cantidadAmarillo"));
         columnaRojo.setCellValueFactory(new PropertyValueFactory<TablaTickets, String>("cantidadRojo"));
