@@ -9,7 +9,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="215.0" prefWidth="330.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.ControllerDetallesTicket">
+<AnchorPane prefHeight="215.0" prefWidth="330.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.ControladorDetallesTicket">
    <children>
       <Label layoutX="15.0" layoutY="25.0" text="Nombre Cliente" />
       <Label layoutX="15.0" layoutY="55.0" text="Fecha" />

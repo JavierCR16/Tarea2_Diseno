@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ControllerEdit implements Initializable {
+public class ControladorEdit implements Initializable {
     public boolean caso;
     public String nombreO;
     public String idO;
@@ -30,7 +30,7 @@ public class ControllerEdit implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if (!caso){
+        if (!caso) {
             guardar.setOnAction(event -> {
                 GradoImportancia gradoImportancia = comboBox.getValue();
                 int id = Integer.valueOf(this.id.getText());
@@ -42,9 +42,9 @@ public class ControllerEdit implements Initializable {
         }
     }
 
-    public void iniciar(Supervisor supervisor){
+    public void iniciar(Supervisor supervisor) {
         this.supervisor = supervisor;
-        if(caso){
+        if (caso) {
             comboBox.setVisible(false);
             especializacion.setVisible(false);
             guardar.setText("Cerrar");
@@ -52,8 +52,7 @@ public class ControllerEdit implements Initializable {
                 Stage actual = (Stage) guardar.getScene().getWindow();
                 actual.close();
             });
-        }
-        else {
+        } else {
             comboBox.getItems().addAll(GradoImportancia.values());
         }
         nombre.setText(nombreO);

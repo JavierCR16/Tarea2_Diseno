@@ -16,10 +16,6 @@ import java.util.ResourceBundle;
  */
 public class ControladorVentanaEmpleado implements Initializable {
 
-    GestorBD gestorBDEmpleado;
-
-    Empleado empleadoLogueado;
-
     @FXML
     public Button solicitar;
     @FXML
@@ -28,8 +24,10 @@ public class ControladorVentanaEmpleado implements Initializable {
     public TextArea asunto;
     @FXML
     public Label idTicket;
+    GestorBD gestorBDEmpleado;
+    Empleado empleadoLogueado;
 
-    public void initialize(URL fxmlLocations, ResourceBundle resources){
+    public void initialize(URL fxmlLocations, ResourceBundle resources) {
         asunto.setEditable(false);
         solicitar.setOnAction(event -> {
             int ret = empleadoLogueado.solicitarTicket();
@@ -46,16 +44,15 @@ public class ControladorVentanaEmpleado implements Initializable {
         });
     }
 
-    public void iniciar(){
+    public void iniciar() {
         asunto.clear();
         int id = Integer.valueOf(this.empleadoLogueado.getID());
         this.empleadoLogueado.atendiendo = gestorBDEmpleado.getTicketAtendiendo(id);
-        if(this.empleadoLogueado.atendiendo == null){
+        if (this.empleadoLogueado.atendiendo == null) {
             idTicket.setText("");
             atender.setDisable(true);
             solicitar.setDisable(false);
-        }
-        else{
+        } else {
             idTicket.setText(empleadoLogueado.atendiendo.getId());
             asunto.setText(empleadoLogueado.atendiendo.getAsunto());
             atender.setDisable(false);

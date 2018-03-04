@@ -1,6 +1,5 @@
 package Controladores;
 
-import Controladores.ControllerDetallesTicket;
 import Gestores.GestorBD;
 import Modelo.*;
 import javafx.beans.property.SimpleStringProperty;
@@ -24,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
-public class ControllerSupervisor implements Initializable {
+public class ControladorSupervisor implements Initializable {
     @FXML
     public Button detallesTicket;
     @FXML
@@ -85,7 +84,6 @@ public class ControllerSupervisor implements Initializable {
     public Supervisor supervisorLogueado;
 
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         configurarColumnas();
@@ -101,7 +99,7 @@ public class ControllerSupervisor implements Initializable {
             try {
                 FXMLLoader loader = new FXMLLoader();
                 Parent root = loader.load(getClass().getResource("../Interfaz/DetallesTicket.fxml").openStream());
-                ControllerDetallesTicket controller = loader.getController();
+                ControladorDetallesTicket controller = loader.getController();
                 controller.ticket = actual;
                 controller.supervisor = this.supervisorLogueado;
                 controller.iniciar();
@@ -144,11 +142,11 @@ public class ControllerSupervisor implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader();
             Parent root = loader.load(getClass().getResource("../Interfaz/Agregar.fxml").openStream());
-            ControllerAgregar controllerAgregar = loader.getController();
+            ControladorAgregar controladorAgregar = loader.getController();
 
-            controllerAgregar.caso = option;
-            controllerAgregar.supervisorActual = supervisorLogueado; //Se manda a la otra ventana para poder enviar el id al gestorBD para que el empleado pueda tener una referencia de su supervisor en la base de datos.
-            controllerAgregar.supervisorActual.setGestorSupervisor(gestorBDSupervisor);
+            controladorAgregar.caso = option;
+            controladorAgregar.supervisorActual = supervisorLogueado; //Se manda a la otra ventana para poder enviar el id al gestorBD para que el empleado pueda tener una referencia de su supervisor en la base de datos.
+            controladorAgregar.supervisorActual.setGestorSupervisor(gestorBDSupervisor);
 
             Stage escenario = new Stage();
             escenario.setTitle("Agregar " + option);
@@ -164,7 +162,7 @@ public class ControllerSupervisor implements Initializable {
         //True cliente False empleado
         FXMLLoader loader = new FXMLLoader();
         Parent root = null;
-        ControllerEdit c = null;
+        ControladorEdit c = null;
         try {
             root = loader.load(getClass().getResource("../Interfaz/editPersona.fxml").openStream());
         } catch (IOException e) {
@@ -247,16 +245,16 @@ public class ControllerSupervisor implements Initializable {
             }
         });
         columnaAsunto.setCellValueFactory(new PropertyValueFactory<String, String>("asunto"));
-        columnaAmarillo.setCellValueFactory(new PropertyValueFactory<TablaTickets,String>("cantidadAmarillo"));
-        columnaRojo.setCellValueFactory(new PropertyValueFactory<TablaTickets,String>("cantidadRojo"));
-        columnaVerde.setCellValueFactory(new PropertyValueFactory<TablaTickets,String>("cantidadVerde"));
+        columnaAmarillo.setCellValueFactory(new PropertyValueFactory<TablaTickets, String>("cantidadAmarillo"));
+        columnaRojo.setCellValueFactory(new PropertyValueFactory<TablaTickets, String>("cantidadRojo"));
+        columnaVerde.setCellValueFactory(new PropertyValueFactory<TablaTickets, String>("cantidadVerde"));
     }
 
     public void mostrarEstadisticas() {
         ticketXcateg.getItems().clear();
         masRecibidos.setText(Ticket.getCategoriaMasRecibida(gestorBDSupervisor));
 
-        TablaTickets  cantTicketsXFecha = Ticket.getDistribTicketsXFecha(fechaIni.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+        TablaTickets cantTicketsXFecha = Ticket.getDistribTicketsXFecha(fechaIni.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
                 fechaFin.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), gestorBDSupervisor);
 
         TablaTickets[] informacionCantidades = {cantTicketsXFecha};

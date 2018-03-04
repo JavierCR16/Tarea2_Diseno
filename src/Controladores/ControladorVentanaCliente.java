@@ -23,14 +23,13 @@ public class ControladorVentanaCliente implements Initializable {
     GestorBD gestorBDCliente;
     Cliente clienteLogueado;
 
-    public void initialize(URL fxmlLocations, ResourceBundle resources){
+    public void initialize(URL fxmlLocations, ResourceBundle resources) {
         guardar.setOnAction(event -> {
             boolean exito = clienteLogueado.agregarTicket(asuntoField.getText());
-            if (exito){
+            if (exito) {
                 this.gestorBDCliente.invocarAlerta("El ticket fue enviado con exito");
                 asuntoField.clear();
-            }
-            else{
+            } else {
                 this.gestorBDCliente.invocarAlerta("Error en la base de datos");
             }
         });

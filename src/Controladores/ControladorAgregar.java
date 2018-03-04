@@ -1,6 +1,5 @@
 package Controladores;
 
-import Gestores.GestorBD;
 import Modelo.Supervisor;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,7 +10,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ControllerAgregar implements Initializable {
+public class ControladorAgregar implements Initializable {
     @FXML
     public Button agregar;
     @FXML
@@ -26,7 +25,7 @@ public class ControllerAgregar implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         agregar.setOnAction(event -> {
             String nombre = nombreField.getText();
-            switch (caso){
+            switch (caso) {
                 case "Cliente":
                     supervisorActual.agregarCliente(nombre); //Aqui el ID del supervisor no va a ser necesario, pero como la funcion esta dividida por un case, entonces igual hay que enviarlo.
                     break;
