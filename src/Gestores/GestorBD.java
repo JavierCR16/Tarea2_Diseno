@@ -160,7 +160,7 @@ public class GestorBD {
                 String sqlEmpleado = "INSERT INTO EMPLEADO (IDSUPERVISOR, NOMBRE) VALUES (?, ?)";
                 try {
                     PreparedStatement insertarEmpleado = conexion.prepareStatement(sqlEmpleado, Statement.RETURN_GENERATED_KEYS);
-                    insertarEmpleado.setInt(1, idSupervisor); //TODO PONER ID SUPERVISOR
+                    insertarEmpleado.setInt(1, idSupervisor);
                     insertarEmpleado.setString(2, nombre);
                     insertarEmpleado.executeUpdate();
                     ResultSet buscarUltimoID = insertarEmpleado.getGeneratedKeys();

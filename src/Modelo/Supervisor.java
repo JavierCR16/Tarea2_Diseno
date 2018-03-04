@@ -2,9 +2,6 @@ package Modelo;
 
 import Gestores.GestorBD;
 
-import java.util.ArrayList;
-import java.util.Date;
-
 public class Supervisor {
 
     private int ID;
@@ -26,23 +23,12 @@ public class Supervisor {
         gestorSupervisor.actualizarEmpleado(idEmpleado, especializacion);
     }
 
-
-
     public void agregarEmpleado(String nombre) {
         gestorSupervisor.agregarClienteEmpleado(nombre, "Empleado",ID);
-
     }
 
     public void agregarCliente(String nombre) {
-        gestorSupervisor.agregarClienteEmpleado(nombre, "Cliente",ID);
-    }
-
-    public int getID() {
-        return ID;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
+        gestorSupervisor.agregarClienteEmpleado(nombre, "Cliente", ID);
     }
 
     public String getNombre() {
@@ -51,10 +37,6 @@ public class Supervisor {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public GestorBD getGestorSupervisor() {
-        return gestorSupervisor;
     }
 
     public void setGestorSupervisor(GestorBD gestorSupervisor) {

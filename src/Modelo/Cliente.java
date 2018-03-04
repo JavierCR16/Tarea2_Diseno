@@ -11,9 +11,8 @@ public class Cliente {
     public GestorBD gestorBD;
 
     public Cliente(String nombre, String id){
-
         this.nombre = new SimpleStringProperty(nombre);
-        this.ID = new SimpleStringProperty(id);//TODO Sacar el ID de la base e insertar al cliente nuevo en la base
+        this.ID = new SimpleStringProperty(id);
     }
 
     public boolean agregarTicket(String asunto){
@@ -24,21 +23,8 @@ public class Cliente {
         return nombre.get();
     }
 
-
     public String getID() {
         return ID.get();
-    }
-
-    public SimpleStringProperty IDProperty() {
-        return ID;
-    }
-
-    public void setID(String ID) {
-        this.ID.set(ID);
-    }
-
-    public SimpleStringProperty nombreProperty() {
-        return nombre;
     }
 
     public void setNombre(String nombre) {

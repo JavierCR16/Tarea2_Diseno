@@ -24,10 +24,10 @@ public class Empleado {
     public int solicitarTicket(){
         Ticket t = gestor.solicitarTicket(Integer.valueOf(this.getID()));
         if (t == null){
-            System.out.println("Ticket Nulo");
             return 1;
         }
         else{
+            t.empleado = this;
             this.atendiendo = t;
         }
         return 0;
@@ -38,17 +38,13 @@ public class Empleado {
        this.atendiendo = null;
     }
 
-    public void getPorcentAtencionXEmpleado() {
+    public static void getPorcentAtencionXEmpleado() {
         String query = "SELECT empleado, COUNT(*)/100 AS porcentaje FROM Tickets GROUP BY empleado ORDER BY porcentaje;";
-        //TODO Revisar query y convertir resultado a Observable list
+        //TODO Javi lo tiene
     }
 
     public String getNombre() {
         return nombre.get();
-    }
-
-    public SimpleStringProperty nombreProperty() {
-        return nombre;
     }
 
     public void setNombre(String nombre) {
@@ -57,14 +53,6 @@ public class Empleado {
 
     public String getID() {
         return ID.get();
-    }
-
-    public SimpleStringProperty IDProperty() {
-        return ID;
-    }
-
-    public void setID(String ID) {
-        this.ID.set(ID);
     }
 
 }
