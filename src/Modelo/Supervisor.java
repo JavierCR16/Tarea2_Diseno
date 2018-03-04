@@ -18,26 +18,13 @@ public class Supervisor {
         this.ID = ID;
     }
 
-    /*
-    public void catalogarTicket(int idTicket, GradoImportancia grado) {
-        for (Ticket ticket : Ticket.tickets) {
-            if (ticket.id == idTicket) {
-                ticket.setCategoria(grado);
-                //TODO Actualizar la base con los datos del ticket
-                break;
-            }
-        }
+    public void catalogarTicket(int idTicket, String grado) {
+        gestorSupervisor.actualizarTicket(idTicket, grado);
     }
 
-    public void especializarEmpleado(int idEmpleado, GradoImportancia especializacion) {
-        for (Empleado empleado : Empleado.empleados) {
-            if (empleado.ID == idEmpleado) {
-                empleado.setEspecializacion(especializacion);
-                //TODO Actualizar la base con los datos del empleado
-                break;
-            }
-        }
-    }*/
+    public void especializarEmpleado(int idEmpleado, String especializacion) {
+        gestorSupervisor.actualizarEmpleado(idEmpleado, especializacion);
+    }
 
 
 

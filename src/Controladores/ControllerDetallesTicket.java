@@ -37,7 +37,7 @@ public class ControllerDetallesTicket implements Initializable {
         comboBox.getItems().addAll(GradoImportancia.values());
         save.setOnAction(event -> {
             GradoImportancia g = (GradoImportancia) comboBox.getValue();
-            supervisor.gestorSupervisor.actualizarTicket(Integer.valueOf(ticket.getId()), g.toString());// TODO El supervisor deberia tener uan funcion de especializar ticket que llama al gestor y haga el brete, sino no se estaria respetando el diseño.
+            supervisor.catalogarTicket(Integer.valueOf(ticket.getId()), g.toString());
             Stage actual = (Stage) save.getScene().getWindow();
             actual.close();
         });
