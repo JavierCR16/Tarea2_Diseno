@@ -1,5 +1,5 @@
 package Modelo;
 
 public enum GradoImportancia {
-    ROJO, AMARILLO, VERDE, SIN_CATALOGAR
+    AMARILLO, ROJO, VERDE, SIN_CATALOGAR
 }

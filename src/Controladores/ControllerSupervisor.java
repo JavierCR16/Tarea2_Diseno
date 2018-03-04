@@ -2,10 +2,7 @@ package Controladores;
 
 import Controladores.ControllerDetallesTicket;
 import Gestores.GestorBD;
-import Modelo.Cliente;
-import Modelo.Empleado;
-import Modelo.Supervisor;
-import Modelo.Ticket;
+import Modelo.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -22,7 +19,9 @@ import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class ControllerSupervisor implements Initializable {
@@ -47,7 +46,13 @@ public class ControllerSupervisor implements Initializable {
     @FXML
     public ListView perctPorEmpleado;
     @FXML
-    public Button actualizar;
+    public TableColumn columnaAmarillo;
+    @FXML
+    public TableColumn columnaRojo;
+    @FXML
+    public TableColumn columnaVerde;
+    @FXML
+    public Button actualizarEstadisticas;
     @FXML
     public Button actualizarTickets;
     @FXML
@@ -79,9 +84,18 @@ public class ControllerSupervisor implements Initializable {
 
     public Supervisor supervisorLogueado;
 
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         configurarColumnas();
+
+        actualizarEstadisticas.setOnAction(event -> {
+
+            mostrarEstadisticas();
+
+        });
+
         detallesTicket.setOnAction(event -> {
             Ticket actual = (Ticket) listTickets.getSelectionModel().getSelectedItem();
             try {
@@ -100,13 +114,14 @@ public class ControllerSupervisor implements Initializable {
                 e.printStackTrace();
             }
         });
-        actualizarEmpleados.setOnAction(event->{
+
+        actualizarEmpleados.setOnAction(event -> {
             actualizarInformacion(1);
         });
-        actualizarTickets.setOnAction(event->{
+        actualizarTickets.setOnAction(event -> {
             actualizarInformacion(2);
         });
-        actualizarClientes.setOnAction(event ->{
+        actualizarClientes.setOnAction(event -> {
 
             actualizarInformacion(3);
         });
@@ -125,7 +140,7 @@ public class ControllerSupervisor implements Initializable {
         });
     }
 
-    public void abrirAgregar(String option){
+    public void abrirAgregar(String option) {
         try {
             FXMLLoader loader = new FXMLLoader();
             Parent root = loader.load(getClass().getResource("../Interfaz/Agregar.fxml").openStream());
@@ -136,7 +151,7 @@ public class ControllerSupervisor implements Initializable {
             controllerAgregar.supervisorActual.setGestorSupervisor(gestorBDSupervisor);
 
             Stage escenario = new Stage();
-            escenario.setTitle("Agregar "+ option);
+            escenario.setTitle("Agregar " + option);
             escenario.setScene(new Scene(root, 273, 146));
             escenario.show();
 
@@ -145,7 +160,7 @@ public class ControllerSupervisor implements Initializable {
         }
     }
 
-    public void abrirDetalles(Boolean caso, Object persona){
+    public void abrirDetalles(Boolean caso, Object persona) {
         //True cliente False empleado
         FXMLLoader loader = new FXMLLoader();
         Parent root = null;
@@ -157,14 +172,13 @@ public class ControllerSupervisor implements Initializable {
         }
         c = loader.getController();
         Stage escenario = new Stage();
-        if(caso){
+        if (caso) {
             Cliente cliente1 = (Cliente) persona;
             escenario.setTitle("Detalles Cliente");
             c.idO = cliente1.getID();
             c.nombreO = cliente1.getNombre();
             c.caso = caso;
-        }
-        else{
+        } else {
             Empleado empleado = (Empleado) persona;
             escenario.setTitle("Detalles Empleado");
             c.idO = empleado.getID();
@@ -176,7 +190,7 @@ public class ControllerSupervisor implements Initializable {
         escenario.show();
     }
 
-    public void cargarDatosDefecto(){
+    public void cargarDatosDefecto() {
         ArrayList<Empleado> empleadosSinEspecializar = gestorBDSupervisor.getEmpleadosSinEspecializar();
         ArrayList<Ticket> ticketsSinCategorizar = gestorBDSupervisor.getTicketsSinCategorizar();
         ArrayList<Cliente> clientes = gestorBDSupervisor.getClientes();
@@ -191,9 +205,9 @@ public class ControllerSupervisor implements Initializable {
 
     }
 
-    public void actualizarInformacion(int opcion){
+    public void actualizarInformacion(int opcion) {
 
-        switch(opcion){
+        switch (opcion) {
             case 1:
                 ArrayList<Empleado> empleados = gestorBDSupervisor.getEmpleadosSinEspecializar();
 
@@ -202,7 +216,7 @@ public class ControllerSupervisor implements Initializable {
                 break;
             case 2:
 
-                  ArrayList<Ticket> ticketsSinCategorizar = gestorBDSupervisor.getTicketsSinCategorizar();
+                ArrayList<Ticket> ticketsSinCategorizar = gestorBDSupervisor.getTicketsSinCategorizar();
 
                 ObservableList<Ticket> listaTickets = FXCollections.observableArrayList(ticketsSinCategorizar);
                 listTickets.setItems(listaTickets);
@@ -210,7 +224,7 @@ public class ControllerSupervisor implements Initializable {
             case 3:
 
                 ArrayList<Cliente> clientes = gestorBDSupervisor.getClientes();
-                ObservableList<Cliente> listaClientes= FXCollections.observableArrayList(clientes);
+                ObservableList<Cliente> listaClientes = FXCollections.observableArrayList(clientes);
                 listClientes.setItems(listaClientes);
                 break;
 
@@ -218,18 +232,34 @@ public class ControllerSupervisor implements Initializable {
 
     }
 
-    public void configurarColumnas(){
-        columnaIdEmpleado.setCellValueFactory(new PropertyValueFactory<Empleado,String>("ID"));
-        columnaNombreEmpleado.setCellValueFactory(new PropertyValueFactory<Empleado,String>("nombre"));
-        columnaIdCliente.setCellValueFactory(new PropertyValueFactory<Cliente,String>("ID"));
-        columnaNombreCliente.setCellValueFactory(new PropertyValueFactory<Cliente,String>("nombre"));
-        columnaIdTicket.setCellValueFactory(new PropertyValueFactory<Ticket,String>("id"));
+    public void configurarColumnas() {
+        columnaIdEmpleado.setCellValueFactory(new PropertyValueFactory<Empleado, String>("ID"));
+        columnaNombreEmpleado.setCellValueFactory(new PropertyValueFactory<Empleado, String>("nombre"));
+        columnaIdCliente.setCellValueFactory(new PropertyValueFactory<Cliente, String>("ID"));
+        columnaNombreCliente.setCellValueFactory(new PropertyValueFactory<Cliente, String>("nombre"));
+        columnaIdTicket.setCellValueFactory(new PropertyValueFactory<Ticket, String>("id"));
         columnaNombreClienteTicket.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Ticket, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Ticket, String> t) {
                 return new SimpleStringProperty(t.getValue().getCliente().getNombre());
             }
         });
-        columnaAsunto.setCellValueFactory(new PropertyValueFactory<Ticket,String>("asunto"));
+        columnaAsunto.setCellValueFactory(new PropertyValueFactory<String, String>("asunto"));
+        columnaAmarillo.setCellValueFactory(new PropertyValueFactory<TablaTickets,String>("cantidadAmarillo"));
+        columnaRojo.setCellValueFactory(new PropertyValueFactory<TablaTickets,String>("cantidadRojo"));
+        columnaVerde.setCellValueFactory(new PropertyValueFactory<TablaTickets,String>("cantidadVerde"));
     }
+
+    public void mostrarEstadisticas() {
+        ticketXcateg.getItems().clear();
+        masRecibidos.setText(Ticket.getCategoriaMasRecibida(gestorBDSupervisor));
+
+        TablaTickets  cantTicketsXFecha = Ticket.getDistribTicketsXFecha(fechaIni.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                fechaFin.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), gestorBDSupervisor);
+
+        TablaTickets[] informacionCantidades = {cantTicketsXFecha};
+
+        ticketXcateg.setItems(FXCollections.observableArrayList(Arrays.asList(informacionCantidades)));
+    }
+
 }

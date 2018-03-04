@@ -35,7 +35,7 @@ public class ControllerEdit implements Initializable {
                 GradoImportancia gradoImportancia = comboBox.getValue();
                 int id = Integer.valueOf(this.id.getText());
                 String esp = gradoImportancia.toString();
-                supervisor.gestorSupervisor.actualizarEmpleado(id, esp);
+                supervisor.gestorSupervisor.actualizarEmpleado(id, esp); // TODO El supervisor debe implementar una funcion especializar la cual llama al gestor y especializs
                 Stage actual = (Stage) guardar.getScene().getWindow();
                 actual.close();
             });

@@ -336,6 +336,59 @@ public class GestorBD {
         }
     }
 
+    public String getTipoTicketsMasRecibidos(){
+        String queryTicket = "SELECT TOP (1)categoria, COUNT(*) AS cantidad FROM GRADOIMPORTANCIA,TICKET WHERE IDCATEGORIA = GRADOIMPORTANCIA.ID " +
+                "AND GRADOIMPORTANCIA.CATEGORIA != 'SIN_CATALOGAR' " +
+                "GROUP BY categoria ORDER BY cantidad DESC";
+        String categoriaEncontrada = "";
+        try{
+            PreparedStatement ticketMasRecibido = conexion.prepareStatement(queryTicket);
+            ResultSet categoriaRecibida = ticketMasRecibido.executeQuery();
+
+            while(categoriaRecibida.next()){
+                categoriaEncontrada = categoriaRecibida.getString("categoria");
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        return categoriaEncontrada;
+    }
+
+    public TablaTickets getDistTicketsXFecha(String fechaIni, String fechaFin){
+
+        String queryTicketFecha = "SELECT categoria, COUNT(*) as totalTickets FROM TICKET,GRADOIMPORTANCIA WHERE fecha BETWEEN ? AND ? AND GRADOIMPORTANCIA.ID = TICKET.IDCATEGORIA AND CATEGORIA != 'SIN_CATALOGAR' GROUP BY categoria";
+        String[] cantidadTickets = {"0","0","0"};
+
+        try{
+
+            PreparedStatement extraerTicketsFecha = conexion.prepareStatement(queryTicketFecha);
+            extraerTicketsFecha.setString(1,fechaIni);
+            extraerTicketsFecha.setString(2,fechaFin);
+            ResultSet cantidadesExtraidas = extraerTicketsFecha.executeQuery();
+
+            while(cantidadesExtraidas.next()){
+
+                switch(cantidadesExtraidas.getString("categoria")){
+
+                    case "Amarillo":
+                        cantidadTickets[0] =cantidadesExtraidas.getString("totalTickets");
+                        break;
+                    case "Rojo":
+                        cantidadTickets[1] = cantidadesExtraidas.getString("totalTickets");
+                        break;
+                    case "Verde":
+                        cantidadTickets[2] = cantidadesExtraidas.getString("totalTickets");
+                        break;
+                }
+            }
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return new TablaTickets(cantidadTickets[0],cantidadTickets[1],cantidadTickets[2]);
+    }
+
     public void atenderTicket(int id, EstadoTicket estadoTicket){
         String sqlTicket = "UPDATE TICKET SET IDESTADO = ? WHERE ID = ?;";
         try {

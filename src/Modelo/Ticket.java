@@ -1,5 +1,6 @@
 package Modelo;
 
+import Gestores.GestorBD;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.util.ArrayList;
@@ -38,19 +39,14 @@ public class Ticket {
         this.estado = estado;
     }
 
-    public int[] getDistribTicketsXFecha(Date fechaIni, Date fechaFin) {
-        String query =
-                "SELECT COUNT(*) FROM Tickets WHERE fecha BETWEEN " +
-                        fechaIni.toString() + ", " + fechaFin.toString() + "GROUP BY categoria;";
-        //TODO Hacer bien el query y convertir el resultado a tablas
-        return new int[]{0, 0, 0};//TODO cambiar valores por resultado del query
+    public static TablaTickets getDistribTicketsXFecha(String fechaIni, String fechaFin, GestorBD gestorBase) {
+
+        return gestorBase.getDistTicketsXFecha(fechaIni,fechaFin);
     }
 
-    public String getCategoriaMasRecibida() {
-        String query = "SELECT categoria, COUNT(*) AS cantidad FROM Tickets WHERE categoria != \"SIN_CATALOGAR\" " +
-                "GROUP BY categoria ORDER BY cantidad LIMIT 1;";
-        //TODO Revisar query y cambiar resultado de funcion
-        return "SIN_CATALOGAR";
+    public static String getCategoriaMasRecibida(GestorBD gestorBase) {
+
+        return gestorBase.getTipoTicketsMasRecibidos();
     }
 
     public Date getFecha() {
@@ -89,8 +85,6 @@ public class Ticket {
     public SimpleStringProperty idProperty() {
         return id;
     }
-
-
 
     public void setId(String id) {
         this.id.set(id);

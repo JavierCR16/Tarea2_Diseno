@@ -39,6 +39,8 @@ public class Supervisor {
         }
     }*/
 
+
+
     public void agregarEmpleado(String nombre) {
         gestorSupervisor.agregarClienteEmpleado(nombre, "Empleado",ID);
 
@@ -47,13 +49,6 @@ public class Supervisor {
     public void agregarCliente(String nombre) {
         gestorSupervisor.agregarClienteEmpleado(nombre, "Cliente",ID);
     }
-
-    //TODO Eliminar funciones de estadisticas
-
-    /*Funciones para estadisticas
-
-
-    */
 
     public int getID() {
         return ID;
