@@ -485,7 +485,7 @@ public class GestorBD {
             while(porcentajesObtenidos.next()){
                 String categoria = porcentajesObtenidos.getString("categoria");
                 String nombreEmp = porcentajesObtenidos.getString("nombre");
-                String porcentajeAdmision = porcentajesObtenidos.getString("porcentajeAtencion")+" %"; //sv
+                String porcentajeAdmision = porcentajesObtenidos.getString("porcentajeAtencion")+" %";
 
                 porcentajes.add(new TablaPorcentajeAtencion(categoria,nombreEmp,porcentajeAdmision));
             }
