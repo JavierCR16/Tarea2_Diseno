@@ -282,12 +282,16 @@ public class ControladorSupervisor implements Initializable {
     public void mostrarEstadisticas() {
         ticketXcateg.getItems().clear();
         masRecibidos.setText(Ticket.getCategoriaMasRecibida(gestorBDSupervisor)); //Set el ticket mas recibido
-
-        TablaTickets cantTicketsXFecha = Ticket.getDistribTicketsXFecha(fechaIni.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
-                fechaFin.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), gestorBDSupervisor);
-
+        TablaTickets cantTicketsXFecha = null;
+        try {
+            cantTicketsXFecha = Ticket.getDistribTicketsXFecha(fechaIni.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                    fechaFin.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), gestorBDSupervisor);
+        }
+        catch(NullPointerException e){
+            gestorBDSupervisor.invocarAlerta("Ingrese una fecha valida");
+        }
         TablaTickets[] informacionCantidades = {cantTicketsXFecha}; //Set la cantidad de tickets por fechas seleccionadas
-
+        ticketXcateg.setItems(FXCollections.observableArrayList(Arrays.asList(informacionCantidades)));
         ArrayList<TablaPorcentajeAtencion> porcentajesEmpleados = Empleado.getPorcentAtencionXEmpleado(gestorBDSupervisor);
         perctPorEmpleado.setItems(FXCollections.observableArrayList(porcentajesEmpleados));
     }

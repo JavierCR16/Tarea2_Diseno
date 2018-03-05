@@ -356,21 +356,15 @@ public class GestorBD {
     }
 
     public TablaTickets getDistTicketsXFecha(String fechaIni, String fechaFin){
-
         String queryTicketFecha = "SELECT categoria, COUNT(*) as totalTickets FROM TICKET,GRADOIMPORTANCIA WHERE fecha BETWEEN ? AND ? AND GRADOIMPORTANCIA.ID = TICKET.IDCATEGORIA AND CATEGORIA != 'SIN_CATALOGAR' GROUP BY categoria";
         String[] cantidadTickets = {"0","0","0"};
-
         try{
-
             PreparedStatement extraerTicketsFecha = conexion.prepareStatement(queryTicketFecha);
             extraerTicketsFecha.setString(1,fechaIni);
             extraerTicketsFecha.setString(2,fechaFin);
             ResultSet cantidadesExtraidas = extraerTicketsFecha.executeQuery();
-
             while(cantidadesExtraidas.next()){
-
                 switch(cantidadesExtraidas.getString("categoria")){
-
                     case "Amarillo":
                         cantidadTickets[0] =cantidadesExtraidas.getString("totalTickets");
                         break;

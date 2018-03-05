@@ -6,8 +6,6 @@ import javafx.beans.property.SimpleStringProperty;
 public class Cliente {
     public SimpleStringProperty ID;
     private SimpleStringProperty nombre;
-
-
     public GestorBD gestorBD;
 
     public Cliente(String nombre, String id){

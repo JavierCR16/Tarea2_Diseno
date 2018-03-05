@@ -41,7 +41,6 @@ public class Ticket {
     }
 
     public static TablaTickets getDistribTicketsXFecha(String fechaIni, String fechaFin, GestorBD gestorBase) {
-
         return gestorBase.getDistTicketsXFecha(fechaIni,fechaFin);
     }
 
