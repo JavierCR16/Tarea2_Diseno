@@ -496,7 +496,7 @@ public class GestorBD {
             idEstado = encontrarIDEstado(EstadoTicket.ATENDIDO);
         else//caso para encontrar en atencion
             idEstado = encontrarIDEstado(EstadoTicket.ATENDIENDO);
-        String obtenerClientes = "SELECT T.ID, IDEMPLEADO, G.CATEGORIA FROM TICKET T INNER JOIN GRADOIMPORTANCIA G ON IDESTADO = G.ID WHERE IDESTADO = ?;";
+        String obtenerClientes = "SELECT T.ID, IDEMPLEADO, G.CATEGORIA FROM TICKET T,GRADOIMPORTANCIA G, ESTADOTICKET  WHERE IDESTADO = ESTADOTICKET.ID AND G.ID= T.IDCATEGORIA AND IDESTADO = ?;";
         try{
             PreparedStatement extraerTickets = conexion.prepareStatement(obtenerClientes);
             extraerTickets.setInt(1, idEstado);

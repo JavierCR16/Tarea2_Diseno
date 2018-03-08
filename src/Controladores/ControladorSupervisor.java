@@ -293,6 +293,7 @@ public class ControladorSupervisor implements Initializable {
         TablaTickets[] informacionCantidades = {cantTicketsXFecha}; //Set la cantidad de tickets por fechas seleccionadas
         ticketXcateg.setItems(FXCollections.observableArrayList(Arrays.asList(informacionCantidades)));
         ArrayList<TablaPorcentajeAtencion> porcentajesEmpleados = Empleado.getPorcentAtencionXEmpleado(gestorBDSupervisor);
+        ticketXcateg.setItems(FXCollections.observableArrayList(Arrays.asList(informacionCantidades)));
         perctPorEmpleado.setItems(FXCollections.observableArrayList(porcentajesEmpleados));
     }
 
